@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="left-pane">
+    <button class="back-btn" [routerLink]="['/']">Înapoi</button>
+    <h2 class="form-title">Găsește licee potrivite</h2>
+    <form (ngSubmit)="onSubmit()" #formRef="ngForm">
+      <label for="an">An:</label>
+      <select id="an" name="an" [(ngModel)]="selectedYear" required>
+        <option value="" disabled>Selectează un an</option>
+        <option *ngFor="let an of years" [value]="an">{{ an }}</option>
+      </select>
+
+      <label for="medie">Media Evaluare Națională:</label>
+      <input type="number" id="medie" name="medie" step="0.01" min="1" max="10" [(ngModel)]="userAverage" required />
+
+      <label for="medieGimnaziu">Media de absolvire (opțional):</label>
+      <input type="number" id="medieGimnaziu" name="medieGimnaziu" step="0.01" min="1" max="10" [(ngModel)]="userGradAverage" />
+
+      <button type="submit" [disabled]="formRef.invalid">Vezi liceele</button>
+    </form>
+  </div>
+
+  <div class="results-pane">
+    <div class="results-wrapper">
+      <div class="placeholder-box" *ngIf="!hasSearched">
+        <p class="placeholder-text">Completează formularul pentru a vedea opțiunile disponibile.</p>
+      </div>
+
+      <div class="placeholder-box" *ngIf="hasSearched && filteredHighSchools.length === 0">
+        <p class="placeholder-text">Nu s-au găsit licee potrivite pentru criteriile introduse.</p>
+      </div>
+
+      <div *ngIf="filteredHighSchools.length > 0" class="results-scroll">
+        <div *ngFor="let school of filteredHighSchools" class="match-card">
+          <h3>Liceu: {{ school.liceu }}</h3>
+          <p>Specializare: {{ sanitizeHtml(school.specializare) }}</p>
+          <p>Prima medie de intrare: {{ school.primaMedie }} (abs. {{ school.primaAbs }}) - poziția {{ school.pozMin }}, ID: {{ school.idMin }} 🛈</p>
+          <p>Ultima medie de intrare: {{ school.ultimaMedie }} (abs. {{ school.ultimaAbs }}) - poziția {{ school.pozMax }}, ID: {{ school.idMax }} 🛈</p>
+          <p>Pozitii în clasament pentru acest liceu: {{ school.pozMin }} - {{ school.pozMax }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
