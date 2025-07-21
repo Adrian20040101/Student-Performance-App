@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import {GroupedSpecializationRow} from '../../components/grouped-specialization-row/grouped-specialization-row';
+import {GroupedSpecialization} from '../../models/groupedSpecialization';
+import {RouterLink} from '@angular/router';
 
 interface Candidate {
   h: string; // liceu + specialization combined string
@@ -9,20 +12,11 @@ interface Candidate {
   madm: string;
 }
 
-interface GroupedSpecialization {
-  sanitizedName: string,     // Liceu + Specializare
-  positionsOccupied: number, // Poziții ocupate (total capacity)
-  placesOccupied: number,    // Locuri ocupate
-  placesFree: number,        // Locuri libere
-  percentage: number,        // % Ocupare
-  lastAverage: string        // Ultima medie (string for fixed decimals)
-}
-
 @Component({
   selector: 'app-occupancy',
   templateUrl: './grad-ocupare.html',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, GroupedSpecializationRow, RouterLink],
   styleUrls: ['./grad-ocupare.css'],
 })
 export class GradOcupare {

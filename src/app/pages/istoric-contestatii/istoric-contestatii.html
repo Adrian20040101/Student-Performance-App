@@ -1,0 +1,18 @@
+<div class="container">
+  <h1>📊 Istoric contestații la română</h1>
+
+  <div class="stats" *ngIf="!statisticsError; else errorBlock">
+    <p>Total contestații: <strong>{{ statistics.total }}</strong></p>
+    <p>Note crescute: <strong>{{ statistics.crescute }}</strong></p>
+    <p>Note scăzute: <strong>{{ statistics.scazute }}</strong></p>
+    <p>Fără modificare: <strong>{{ statistics.neschimbat }}</strong></p>
+    <p>Diferență medie: <strong>{{ statistics.mediaDiferenta }}</strong> puncte</p>
+  </div>
+
+  <ng-template #errorBlock>
+    <p style="color: red;">{{ statisticsError }}</p>
+  </ng-template>
+
+  <canvas id="chartNote"></canvas>
+  <canvas id="chartDeviatie"></canvas>
+</div>

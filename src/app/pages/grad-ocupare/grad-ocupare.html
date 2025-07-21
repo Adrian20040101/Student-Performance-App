@@ -1,4 +1,5 @@
 <div class="container">
+  <button class="back-btn" [routerLink]="['/']">Înapoi</button>
   <h2>Grad de ocupare licee 2024</h2>
 
   <label for="position" class="input-label">
@@ -30,14 +31,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let item of complete">
-          <td>{{ item.sanitizedName }}</td>
-          <td>{{ item.positionsOccupied }}</td>
-          <td>{{ item.placesOccupied }}</td>
-          <td>{{ item.placesFree }}</td>
-          <td>{{ item.percentage }}%</td>
-          <td>{{ item.lastAverage }}</td>
-        </tr>
+        <tr *ngFor="let item of complete" app-grouped-specialization-row [item]="item"></tr>
         </tbody>
       </table>
     </section>
@@ -56,14 +50,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let item of partial">
-          <td>{{ item.sanitizedName }}</td>
-          <td>{{ item.positionsOccupied }}</td>
-          <td>{{ item.placesOccupied }}</td>
-          <td>{{ item.placesFree }}</td>
-          <td>{{ item.percentage }}%</td>
-          <td>{{ item.lastAverage }}</td>
-        </tr>
+        <tr *ngFor="let item of partial" app-grouped-specialization-row [item]="item"></tr>
         </tbody>
       </table>
     </section>
@@ -82,14 +69,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let item of unoccupied">
-          <td>{{ item.sanitizedName }}</td>
-          <td>{{ item.positionsOccupied }}</td>
-          <td>{{ item.placesOccupied }}</td>
-          <td>{{ item.placesFree }}</td>
-          <td>{{ item.percentage }}%</td>
-          <td>{{ item.lastAverage }}</td>
-        </tr>
+        <tr *ngFor="let item of unoccupied" app-grouped-specialization-row [item]="item"></tr>
         </tbody>
       </table>
     </section>

@@ -46,9 +46,20 @@ tbody tr:nth-child(even) {
   background-color: #f2f4f8;
 }
 
-td {
-  padding: 0.75rem 1rem;
-  border-bottom: 1px solid #ccc;
+.back-btn {
+  align-self: flex-start;
+  background-color: transparent;
+  border: 1px solid #1976d2;
+  color: #1976d2;
+  padding: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  transition: background-color 0.2s;
+}
+
+.back-btn:hover {
+  background-color: #e3f2fd;
 }
 
 h2, h3 {
