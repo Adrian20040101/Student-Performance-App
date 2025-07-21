@@ -84,7 +84,7 @@ export class Licee implements OnInit {
     if (!this.dataLoaded || this.userAverage === null) return;
 
     const yearData = this.allHighSchools
-      .filter(hs => hs.an === this.selectedYear && !isNaN(parseFloat(hs.mev)));
+      .filter(hs => hs.an === Number(this.selectedYear) && !isNaN(parseFloat(hs.mev)));
 
     const sortedGlobal = [...yearData].sort((a, b) => parseFloat(b.mev) - parseFloat(a.mev));
     const globalRankMap = new Map<string, number>();
