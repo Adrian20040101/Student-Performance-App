@@ -1,0 +1,68 @@
+<div class="container">
+  <h1>Grad de ocupare</h1>
+
+  <label>
+    Poziția ta:
+    <input [(ngModel)]="position" type="number" />
+  </label>
+
+  <button (click)="loadData()">Afișează</button>
+
+  <div *ngIf="loading">Se încarcă...</div>
+
+  <div *ngIf="!loading">
+    <h2>Complete</h2>
+    <table *ngIf="complete.length > 0">
+      <tr>
+        <th>Specializare</th>
+        <th>Ocupate</th>
+        <th>Libere</th>
+        <th>%</th>
+        <th>Ultima medie</th>
+      </tr>
+      <tr *ngFor="let item of complete">
+        <td>{{ item.name }}</td>
+        <td>{{ item.occupied }}</td>
+        <td>{{ item.free }}</td>
+        <td>{{ item.percentage }}%</td>
+        <td>{{ item.lastAverage }}</td>
+      </tr>
+    </table>
+
+    <h2>Parțial ocupate</h2>
+    <table *ngIf="partial.length > 0">
+      <tr>
+        <th>Specializare</th>
+        <th>Ocupate</th>
+        <th>Libere</th>
+        <th>%</th>
+        <th>Ultima medie</th>
+      </tr>
+      <tr *ngFor="let item of partial">
+        <td>{{ item.name }}</td>
+        <td>{{ item.occupied }}</td>
+        <td>{{ item.free }}</td>
+        <td>{{ item.percentage }}%</td>
+        <td>{{ item.lastAverage }}</td>
+      </tr>
+    </table>
+
+    <h2>Neocupate</h2>
+    <table *ngIf="unoccupied.length > 0">
+      <tr>
+        <th>Specializare</th>
+        <th>Ocupate</th>
+        <th>Libere</th>
+        <th>%</th>
+        <th>Ultima medie</th>
+      </tr>
+      <tr *ngFor="let item of unoccupied">
+        <td>{{ item.name }}</td>
+        <td>{{ item.occupied }}</td>
+        <td>{{ item.free }}</td>
+        <td>{{ item.percentage }}%</td>
+        <td>{{ item.lastAverage }}</td>
+      </tr>
+    </table>
+  </div>
+</div>
