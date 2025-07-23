@@ -31,7 +31,7 @@ async function fetchJudete() {
       const filePath = path.join(outputDir, `${jud}.json`);
       await fs.writeJson(filePath, data, { spaces: 2 });
     } catch (err) {
-      console.warn(`❌ Eroare la ${jud}: ${err.message}`);
+      console.warn(`Eroare la ${jud}: ${err.message}`);
     }
   }
 
@@ -39,7 +39,7 @@ async function fetchJudete() {
   const combinedPath = path.join(outputDir, 'combined.json');
   await fs.writeJson(combinedPath, allCandidates, { spaces: 2 });
 
-  console.log(`\n🎉 Salvat total ${allCandidates.length} candidați în "combined.json"`);
+  console.log(`\n Salvat total ${allCandidates.length} candidați în "combined.json"`);
 }
 
 fetchJudete();

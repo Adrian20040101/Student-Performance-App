@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { Home } from './pages/home/home';
-import { Statistici } from './pages/statistici/statistici';
-import { Licee } from './pages/licee/licee';
+import {Component} from '@angular/core';
+import {RouterModule} from '@angular/router';
+import {Home} from './pages/home/home';
+import {Statistici} from './pages/statistici/statistici';
+import {Licee} from './pages/licee/licee';
 
 @Component({
   standalone: true,
@@ -11,5 +11,6 @@ import { Licee } from './pages/licee/licee';
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App {}
+export class App {
+}
 
