@@ -2,7 +2,6 @@ const axios = require('axios');
 const fs = require('fs-extra');
 const path = require('path');
 
-// Lista abrevieri județe (vezi https://static.evaluare.edu.ro/2024/rezultate/)
 const judete = [
   'AB', 'AR', 'AG', 'BC', 'BH', 'BN', 'BR', 'BT', 'BV', 'BZ',
   'CS', 'CL', 'CJ', 'CT', 'CV', 'DB', 'DJ', 'GL', 'GR', 'GJ',
@@ -25,7 +24,6 @@ async function fetchJudete() {
       const response = await axios.get(url);
       const data = response.data;
 
-      console.log(`✅ ${jud}: ${data.length} candidați`);
       allCandidates.push(...data.map(entry => ({ ...entry, judet: jud })));
 
       const filePath = path.join(outputDir, `${jud}.json`);
@@ -35,7 +33,6 @@ async function fetchJudete() {
     }
   }
 
-  // Salvează un fișier combinat (opțional)
   const combinedPath = path.join(outputDir, 'combined.json');
   await fs.writeJson(combinedPath, allCandidates, { spaces: 2 });
 

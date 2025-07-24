@@ -97,7 +97,15 @@ export class IstoricContestatii implements OnInit {
       },
       options: {
         responsive: true,
+        elements: {
+          point: {
+            radius: 0
+          }
+        },
         plugins: {
+          datalabels: {
+            display: false
+          },
           title: {
             display: true,
             text: 'Evoluția notelor la română (ri vs ra)',
@@ -108,11 +116,12 @@ export class IstoricContestatii implements OnInit {
           legend: {
             labels: {
               font: {
-                size: 16 // Legend font size
+                size: 16 
               }
             }
           },
           tooltip: {
+            enabled: true,
             callbacks: {
               label: (context) => {
                 const idx = context.dataIndex ?? 0;
@@ -139,6 +148,9 @@ export class IstoricContestatii implements OnInit {
       options: {
         responsive: true,
         plugins: {
+          datalabels: {
+            display: false
+          },
           title: {
             display: true,
             text: 'Devierea față de nota inițială (ra - ri)',
@@ -149,7 +161,7 @@ export class IstoricContestatii implements OnInit {
           legend: {
             labels: {
               font: {
-                size: 16 // Legend font size
+                size: 16 
               }
             }
           },
