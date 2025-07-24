@@ -1,0 +1,23 @@
+<div class="statistici-container">
+  <h1>Analizează performanțele la Bacalaureat</h1>
+
+  <div class="filters">
+    <label for="unitateDropdown">Unitate de învățământ:</label>
+    <select id="unitateDropdown" [(ngModel)]="unitateSelectata" (change)="onUnitateChange(unitateSelectata)">
+      <option value="">Toate</option>
+      <option *ngFor="let unitate of unitati" [value]="unitate">{{unitate}}</option>
+    </select>
+
+    <label for="specializareDropdown">Specializare:</label>
+    <select id="specializareDropdown" [(ngModel)]="specializareSelectata" (change)="onSpecializareChange(specializareSelectata)">
+      <option value="">Toate</option>
+      <option *ngFor="let spec of specializari" [value]="spec">{{spec}}</option>
+    </select>
+  </div>
+
+  <div class="chart-wrapper">
+    <canvas id="chart"></canvas>
+  </div>
+
+  <div class="summary-text">{{ totalEleviText }}</div>
+</div>
