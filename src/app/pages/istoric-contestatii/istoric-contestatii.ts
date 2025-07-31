@@ -2,14 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import {HttpClient} from '@angular/common/http';
 import {CommonModule} from '@angular/common';
+import {Contestatie} from '../../models/contestatie';
+import {ContestatieService} from '../../services/contestatie';
+import {RouterLink} from '@angular/router';
 
 Chart.register(...registerables);
 
-interface Contestatie {
-  name: string;
-  ri: number;  // nota inițială
-  ra: number | null;  // nota după contestație (null dacă nu există)
-}
 interface ContestationStatistics {
   total: number;
   crescute: number;
@@ -22,7 +20,7 @@ interface ContestationStatistics {
   templateUrl: './istoric-contestatii.html',
   standalone: true,
   styleUrls: ['./istoric-contestatii.css'],
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
 })
 export class IstoricContestatii implements OnInit {
   statisticsError: string | null = null;
@@ -33,45 +31,46 @@ export class IstoricContestatii implements OnInit {
     neschimbat: 0,
     mediaDiferenta: '0',
   };
-  constructor(private http: HttpClient) {}
+  constructor(private contestatieService: ContestatieService) {}
   ngOnInit(): void {
-    this.loadData();
-  }
+    this.contestatieService.fetchContestatii();
 
-  loadData(): void {
-    this.http.get<Contestatie[]>('https://ionutb.github.io/simulare-evaluare2025/note.json').subscribe({
+    this.contestatieService.contestatii$.subscribe({
       next: (data) => {
-        let contested = data.filter(e => e.ra !== null);
-
-        contested.sort((a, b) => a.ri - b.ri);
-
-        const labels = contested.map(e => e.name);
-        const riValues = contested.map(e => e.ri);
-        const raValues = contested.map(e => e.ra as number);
-        const deviation = contested.map(e => (e.ra as number) - e.ri);
-
-        const total = contested.length;
-        const crescut = contested.filter(e => (e.ra as number) > e.ri).length;
-        const scazut = contested.filter(e => (e.ra as number) < e.ri).length;
-        const neschimbat = contested.filter(e => (e.ra as number) === e.ri).length;
-        const mediaDiferenta = total > 0 ? (contested.reduce((acc, e) => acc + ((e.ra as number) - e.ri), 0) / total).toFixed(3) : '0';
-
-        this.statistics.total = contested.length;
-        this.statistics.crescute = contested.filter(e => (e.ra as number) > e.ri).length;
-        this.statistics.scazute = contested.filter(e => (e.ra as number) < e.ri).length;
-        this.statistics.neschimbat = contested.filter(e => (e.ra as number) === e.ri).length;
-        this.statistics.mediaDiferenta = this.statistics.total > 0
-          ? (contested.reduce((acc, e) => acc + ((e.ra as number) - e.ri), 0) / this.statistics.total).toFixed(3)
-          : '0';
-
-        this.renderCharts(labels, riValues, raValues, deviation);
+        if (data && data.length > 0) {
+          this.processData(data);
+        }
       },
-      error: (error) => {
-        this.statisticsError = `Eroare la încărcarea contestatii.json: ${error.message}`;
+      error: (err) => {
+        this.statisticsError = `Eroare la încărcarea contestatii.json: ${err.message}`;
       }
     });
   }
 
+  processData(data: Contestatie[]): void {
+    let contested = data.filter(e => e.ra !== null);
+
+    contested.sort((a, b) => a.ri - b.ri);
+
+    const labels = contested.map(e => e.name);
+    const riValues = contested.map(e => e.ri);
+    const raValues = contested.map(e => e.ra as number);
+    const deviation = contested.map(e => (e.ra as number) - e.ri);
+
+    const total = contested.length;
+    const crescut = contested.filter(e => (e.ra as number) > e.ri).length;
+    const scazut = contested.filter(e => (e.ra as number) < e.ri).length;
+    const neschimbat = contested.filter(e => (e.ra as number) === e.ri).length;
+    const mediaDiferenta = total > 0 ? (contested.reduce((acc, e) => acc + ((e.ra as number) - e.ri), 0) / total).toFixed(3) : '0';
+
+    this.statistics.total = total;
+    this.statistics.crescute = crescut;
+    this.statistics.scazute = scazut;
+    this.statistics.neschimbat = neschimbat;
+    this.statistics.mediaDiferenta = mediaDiferenta;
+
+    this.renderCharts(labels, riValues, raValues, deviation);
+  }
 
   renderCharts(labels: string[], riValues: number[], raValues: number[], deviation: number[]): void {
     new Chart('chartNote', {
@@ -116,7 +115,7 @@ export class IstoricContestatii implements OnInit {
           legend: {
             labels: {
               font: {
-                size: 16 
+                size: 16
               }
             }
           },
@@ -161,7 +160,7 @@ export class IstoricContestatii implements OnInit {
           legend: {
             labels: {
               font: {
-                size: 16 
+                size: 16
               }
             }
           },

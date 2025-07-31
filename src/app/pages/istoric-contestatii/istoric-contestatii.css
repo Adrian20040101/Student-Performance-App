@@ -28,3 +28,19 @@ canvas {
   width: 100% !important;
   height: auto !important;
 }
+
+.back-btn {
+  align-self: flex-start;
+  background-color: transparent;
+  border: 1px solid #1976d2;
+  color: #1976d2;
+  padding: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  transition: background-color 0.2s;
+}
+
+.back-btn:hover {
+  background-color: #e3f2fd;
+}
