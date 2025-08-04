@@ -4,7 +4,7 @@
     <h2 class="form-title">Găsește licee potrivite</h2>
     <form (ngSubmit)="onSubmit()" #formRef="ngForm">
       <label for="an">An:</label>
-      <select id="an" name="an" [(ngModel)]="selectedYear" required>
+      <select id="an" name="an" [(ngModel)]="selectedYear" (change)="onYearChange($event)" required>
         <option value="" disabled>Selectează un an</option>
         <option *ngFor="let an of years" [value]="an">{{ an }}</option>
       </select>
