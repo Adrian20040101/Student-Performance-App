@@ -1,88 +1,39 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { Chart, registerables } from 'chart.js';
+import { GraficMediiService } from './grafic-medii.service';
+import { GraficMediiData } from './grafic-medii.model';
 
 Chart.register(...registerables);
 
 @Component({
   selector: 'app-grafic-medii',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, HttpClientModule],
   templateUrl: './grafic-medii.html',
-  styleUrls: ['./grafic-medii.css']
+  styleUrls: ['./grafic-medii.css'],
+  providers: [GraficMediiService]
 })
 export class GraficMedii {
   options: string[] = [];
   selectedOptions: string[] = [];
-  groupedData: Map<string, Record<number, number>> = new Map(); // key: "liceu — specializare", value: { an: medie }
+  groupedData: Map<string, GraficMediiData> = new Map();
   chart: Chart | null = null;
   loading = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(private graficService: GraficMediiService) {}
 
   ngOnInit(): void {
     this.loadData();
   }
 
-  sanitize(input: string): string {
-    return (input || '')
-      .replace(/<br\s*\/?>/gi, ' ')
-      .replace(/<\/?[^>]+(>|$)/g, '')
-      .replace(/\s+/g, ' ')
-      .trim();
-  }
-
   loadData(): void {
     this.loading = true;
-    this.http.get<any[]>('https://ionutb.github.io/simulare-evaluare2025/candidates2024.json').subscribe({
+    this.graficService.getGroupedData().subscribe({
       next: (data) => {
-        this.groupedData.clear();
-
-        const rankedDataPerYear: Record<number, any[]> = {};
-
-        data.forEach(c => {
-          const an = +c.an || 0;
-          const liceu = this.sanitize(c.liceu_nume_complet || c.h || 'Necunoscut');
-          const specializare = this.sanitize(c.specializare_raw || c.sp || 'Necunoscut');
-          const madm = parseFloat(c.madm);
-          if (isNaN(madm)) return;
-
-          const key = `${liceu} — ${specializare}`;
-          if (!rankedDataPerYear[an]) rankedDataPerYear[an] = [];
-          rankedDataPerYear[an].push({ key, madm });
-        });
-
-        for (const an in rankedDataPerYear) {
-          const year = +an;
-          rankedDataPerYear[year].sort((a, b) => b.madm - a.madm); // descrescător
-          rankedDataPerYear[year].forEach((entry, index) => {
-            entry.rankingPos = index + 1;
-          });
-        }
-
-        for (const an in rankedDataPerYear) {
-          const year = +an;
-          const candidates = rankedDataPerYear[year];
-          const byKey: Record<string, any[]> = {};
-
-          candidates.forEach(c => {
-            if (!byKey[c.key]) byKey[c.key] = [];
-            byKey[c.key].push(c);
-          });
-
-          for (const key in byKey) {
-            const filtered = byKey[key];
-            const minMadm = Math.min(...filtered.map(c => c.madm));
-            const lastAdmis = filtered.filter(c => c.madm === minMadm);
-            const maxRankingPos = Math.max(...lastAdmis.map(c => c.rankingPos));
-
-            if (!this.groupedData.has(key)) this.groupedData.set(key, {});
-            this.groupedData.get(key)![year] = maxRankingPos;
-          }
-        }
-
+        this.groupedData = data;
         this.options = Array.from(this.groupedData.keys()).sort();
         this.loading = false;
       },
