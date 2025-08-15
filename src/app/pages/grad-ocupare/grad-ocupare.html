@@ -2,85 +2,87 @@
   <button class="back-btn" [routerLink]="['/']">Înapoi</button>
   <h2>Grad de ocupare licee 2024</h2>
 
-  <label for="position" class="input-label">
-    Introdu pozitia în ierarhie:
-    <input
-      id="position"
-      type="number"
-      [(ngModel)]="position"
-      (change)="loadData()"
-      min="1"
-      class="position-input"
-    />
-  </label>
+  <div class="content-wrapper">
+    <label for="position" class="input-label">
+      Introdu pozitia în ierarhie:
+      <input
+        id="position"
+        type="number"
+        [(ngModel)]="position"
+        (change)="loadData()"
+        min="1"
+        class="position-input"
+      />
+    </label>
 
-  <div *ngIf="loading" class="loading-text">Se încarcă datele...</div>
+    <div *ngIf="loading" class="loading-text">Se încarcă datele...</div>
 
-  <div *ngIf="!loading" class="results-container">
-    <section *ngIf="complete.length > 0" class="results-section">
-      <h3>Complet ocupate</h3>
-      <table>
-        <thead>
-        <tr>
-          <th>Liceu + Specializare</th>
-          <th>Poziții ocupate</th>
-          <th>Locuri ocupate</th>
-          <th>Locuri libere</th>
-          <th>% Ocupare</th>
-          <th>Ultima medie</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let item of complete" app-grouped-specialization-row [item]="item"></tr>
-        </tbody>
-      </table>
-    </section>
+    <div *ngIf="!loading" class="results-container">
+      <section *ngIf="complete.length > 0" class="results-section">
+        <h3>Complet ocupate</h3>
+        <table>
+          <thead>
+          <tr>
+            <th>Liceu + Specializare</th>
+            <th>Poziții ocupate</th>
+            <th>Locuri ocupate</th>
+            <th>Locuri libere</th>
+            <th>% Ocupare</th>
+            <th>Ultima medie</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of complete" app-grouped-specialization-row [item]="item"></tr>
+          </tbody>
+        </table>
+      </section>
 
-    <section *ngIf="partial.length > 0" class="results-section">
-      <h3>Parțial ocupate</h3>
-      <table>
-        <thead>
-        <tr>
-          <th>Liceu + Specializare</th>
-          <th>Poziții ocupate</th>
-          <th>Locuri ocupate</th>
-          <th>Locuri libere</th>
-          <th>% Ocupare</th>
-          <th>Ultima medie</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let item of partial" app-grouped-specialization-row [item]="item"></tr>
-        </tbody>
-      </table>
-    </section>
+      <section *ngIf="partial.length > 0" class="results-section">
+        <h3>Parțial ocupate</h3>
+        <table>
+          <thead>
+          <tr>
+            <th>Liceu + Specializare</th>
+            <th>Poziții ocupate</th>
+            <th>Locuri ocupate</th>
+            <th>Locuri libere</th>
+            <th>% Ocupare</th>
+            <th>Ultima medie</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of partial" app-grouped-specialization-row [item]="item"></tr>
+          </tbody>
+        </table>
+      </section>
 
-    <section *ngIf="unoccupied.length > 0" class="results-section">
-      <h3>Neocupate</h3>
-      <table>
-        <thead>
-        <tr>
-          <th>Liceu + Specializare</th>
-          <th>Poziții ocupate</th>
-          <th>Locuri ocupate</th>
-          <th>Locuri libere</th>
-          <th>% Ocupare</th>
-          <th>Ultima medie</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let item of unoccupied" app-grouped-specialization-row [item]="item"></tr>
-        </tbody>
-      </table>
-    </section>
+      <section *ngIf="unoccupied.length > 0" class="results-section">
+        <h3>Neocupate</h3>
+        <table>
+          <thead>
+          <tr>
+            <th>Liceu + Specializare</th>
+            <th>Poziții ocupate</th>
+            <th>Locuri ocupate</th>
+            <th>Locuri libere</th>
+            <th>% Ocupare</th>
+            <th>Ultima medie</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of unoccupied" app-grouped-specialization-row [item]="item"></tr>
+          </tbody>
+        </table>
+      </section>
 
-    <div
-      *ngIf="
-        complete.length === 0 && partial.length === 0 && unoccupied.length === 0
-      "
-      class="no-results"
-    >
-      Nu s-au găsit rezultate pentru poziția ta.
+      <div
+        *ngIf="
+          complete.length === 0 && partial.length === 0 && unoccupied.length === 0
+        "
+        class="no-results"
+      >
+        Nu s-au găsit rezultate pentru poziția ta.
+      </div>
     </div>
   </div>
 </div>

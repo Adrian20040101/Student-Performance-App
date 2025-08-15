@@ -6,6 +6,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Options } from 'chartjs-plugin-datalabels/types/options';
 import { StatisticiService } from './statistici.service';
 import { BacData } from './statistici.model';
+import { RouterModule } from '@angular/router';
 
 Chart.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 
@@ -19,7 +20,7 @@ declare module 'chart.js' {
   standalone: true,
   selector: 'app-statistici',
   templateUrl: './statistici.html',
-  imports: [FormsModule, NgForOf],
+  imports: [FormsModule, NgForOf, RouterModule],
   styleUrls: ['./statistici.css'],
   providers: [StatisticiService]
 })
@@ -101,7 +102,7 @@ export class Statistici implements OnInit, AfterViewInit {
       else intervals[5]++;
     });
 
-    const labels = ['Neprezentat', 'Respins', '6–7', '7–8', '8–9', '9–11'];
+    const labels = ['Neprezentat', 'Respins', '6-7', '7-8', '8-9', '9-10'];
     const colors = ['#8e0000', '#e57373', '#fff176', '#dce775', '#66bb6a', '#1b5e20'];
 
     const ctx = (document.getElementById('chart') as HTMLCanvasElement).getContext('2d');

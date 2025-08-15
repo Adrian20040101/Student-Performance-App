@@ -7,7 +7,7 @@ import {Licee} from './pages/licee/licee';
 @Component({
   standalone: true,
   selector: 'app-root',
-  imports: [RouterModule, Home, Licee, Statistici],
+  imports: [RouterModule],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

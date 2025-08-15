@@ -1,18 +1,32 @@
 <div class="container">
+  <button class="back-btn" [routerLink]="['/']">Înapoi</button>
   <h1>Istoric contestații la română</h1>
 
-  <div class="stats" *ngIf="!statisticsError; else errorBlock">
-    <p>Total contestații: <strong>{{ statistics.total }}</strong></p>
-    <p>Note crescute: <strong>{{ statistics.crescute }}</strong></p>
-    <p>Note scăzute: <strong>{{ statistics.scazute }}</strong></p>
-    <p>Fără modificare: <strong>{{ statistics.neschimbat }}</strong></p>
-    <p>Diferență medie: <strong>{{ statistics.mediaDiferenta }}</strong> puncte</p>
+  <div class="statistics-container">
+    <div class="stat-box">
+      <strong>Total:</strong> {{ statistics.total }}
+    </div>
+    <div class="stat-box">
+      <strong>Crescute:</strong> {{ statistics.crescute }}
+    </div>
+    <div class="stat-box">
+      <strong>Scăzute:</strong> {{ statistics.scazute }}
+    </div>
+    <div class="stat-box">
+      <strong>Neschimbat:</strong> {{ statistics.neschimbat }}
+    </div>
+    <div class="stat-box">
+      <strong>Media diferență:</strong> {{ statistics.mediaDiferenta }}
+    </div>
   </div>
 
-  <ng-template #errorBlock>
-    <p style="color: red;">{{ statisticsError }}</p>
-  </ng-template>
+  <div class="chart-toggle">
+    <button [class.active]="selectedChart==='evolutie'" (click)="toggleChart('evolutie')">Evoluția notelor</button>
+    <button [class.active]="selectedChart==='devierea'" (click)="toggleChart('devierea')">Devierea notelor</button>
+    <button [class.active]="selectedChart==='differencesFrequency'" (click)="toggleChart('differencesFrequency')">Distribuția diferențelor</button>
+  </div>
 
-  <canvas id="chartNote"></canvas>
-  <canvas id="chartDeviatie"></canvas>
+  <div class="chart-wrapper">
+    <canvas #chartCanvas></canvas>
+  </div>
 </div>

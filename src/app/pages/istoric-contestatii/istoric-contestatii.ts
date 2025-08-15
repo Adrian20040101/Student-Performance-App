@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
-import {HttpClient} from '@angular/common/http';
-import {CommonModule} from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 Chart.register(...registerables);
 
 interface Contestatie {
   name: string;
-  ri: number;  // nota inițială
-  ra: number | null;  // nota după contestație (null dacă nu există)
+  ri: number;
+  ra: number | null;
 }
+
 interface ContestationStatistics {
   total: number;
   crescute: number;
@@ -17,14 +19,15 @@ interface ContestationStatistics {
   neschimbat: number;
   mediaDiferenta: string;
 }
+
 @Component({
   selector: 'app-istoric-contestatii',
   templateUrl: './istoric-contestatii.html',
-  standalone: true,
   styleUrls: ['./istoric-contestatii.css'],
-  imports: [CommonModule],
+  standalone: true,
+  imports: [CommonModule, RouterModule],
 })
-export class IstoricContestatii implements OnInit {
+export class IstoricContestatii implements OnInit, AfterViewInit {
   statisticsError: string | null = null;
   statistics: ContestationStatistics = {
     total: 0,
@@ -33,154 +36,161 @@ export class IstoricContestatii implements OnInit {
     neschimbat: 0,
     mediaDiferenta: '0',
   };
+
+  @ViewChild('chartCanvas') chartCanvas!: ElementRef<HTMLCanvasElement>;
+  chartInstance: Chart | null = null;
+
+  selectedChart: 'evolutie' | 'devierea' | 'differencesFrequency' = 'evolutie';
+
+  labels: string[] = [];
+  riValues: number[] = [];
+  raValues: number[] = [];
+  deviation: number[] = [];
+
   constructor(private http: HttpClient) {}
+
   ngOnInit(): void {
     this.loadData();
+  }
+
+  ngAfterViewInit(): void {
+    this.renderChart();
   }
 
   loadData(): void {
     this.http.get<Contestatie[]>('https://ionutb.github.io/simulare-evaluare2025/note.json').subscribe({
       next: (data) => {
-        let contested = data.filter(e => e.ra !== null);
+        const contested = data.filter(e => e.ra !== null).sort((a, b) => a.ri - b.ri);
 
-        contested.sort((a, b) => a.ri - b.ri);
-
-        const labels = contested.map(e => e.name);
-        const riValues = contested.map(e => e.ri);
-        const raValues = contested.map(e => e.ra as number);
-        const deviation = contested.map(e => (e.ra as number) - e.ri);
+        this.labels = contested.map(e => e.name);
+        this.riValues = contested.map(e => e.ri);
+        this.raValues = contested.map(e => e.ra as number);
+        this.deviation = contested.map(e => (e.ra as number) - e.ri);
 
         const total = contested.length;
-        const crescut = contested.filter(e => (e.ra as number) > e.ri).length;
-        const scazut = contested.filter(e => (e.ra as number) < e.ri).length;
-        const neschimbat = contested.filter(e => (e.ra as number) === e.ri).length;
-        const mediaDiferenta = total > 0 ? (contested.reduce((acc, e) => acc + ((e.ra as number) - e.ri), 0) / total).toFixed(3) : '0';
-
-        this.statistics.total = contested.length;
+        this.statistics.total = total;
         this.statistics.crescute = contested.filter(e => (e.ra as number) > e.ri).length;
         this.statistics.scazute = contested.filter(e => (e.ra as number) < e.ri).length;
         this.statistics.neschimbat = contested.filter(e => (e.ra as number) === e.ri).length;
-        this.statistics.mediaDiferenta = this.statistics.total > 0
-          ? (contested.reduce((acc, e) => acc + ((e.ra as number) - e.ri), 0) / this.statistics.total).toFixed(3)
+        this.statistics.mediaDiferenta = total > 0
+          ? (contested.reduce((acc, e) => acc + ((e.ra as number) - e.ri), 0) / total).toFixed(3)
           : '0';
 
-        this.renderCharts(labels, riValues, raValues, deviation);
+        this.renderChart();
       },
-      error: (error) => {
-        this.statisticsError = `Eroare la încărcarea contestatii.json: ${error.message}`;
-      }
+      error: (err) => this.statisticsError = `Eroare la încărcarea contestatii.json: ${err.message}`
     });
   }
 
+  toggleChart(chart: 'evolutie' | 'devierea' | 'differencesFrequency') {
+    this.selectedChart = chart;
+    this.renderChart();
+  }
 
-  renderCharts(labels: string[], riValues: number[], raValues: number[], deviation: number[]): void {
-    new Chart('chartNote', {
-      type: 'line',
-      data: {
-        labels,
-        datasets: [
-          {
-            label: 'Nota inițială (ri)',
-            data: riValues,
-            borderColor: 'blue',
-            fill: false,
-            tension: 0.1,
-          },
-          {
-            label: 'Nota după contestație (ra)',
-            data: raValues,
-            borderColor: 'green',
-            fill: false,
-            tension: 0.1,
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        elements: {
-          point: {
-            radius: 0
-          }
+  renderChart() {
+    if (!this.chartCanvas) return;
+    if (this.chartInstance) this.chartInstance.destroy();
+
+    if (this.selectedChart === 'evolutie') {
+      this.chartInstance = new Chart(this.chartCanvas.nativeElement, {
+        type: 'line',
+        data: {
+          labels: this.labels,
+          datasets: [
+            { label: 'Nota inițială (ri)', data: this.riValues, borderColor: 'blue', fill: false, tension: 0.1, pointRadius: 0 },
+            { label: 'Nota după contestație (ra)', data: this.raValues, borderColor: 'green', fill: false, tension: 0.1, pointRadius: 0 }
+          ]
         },
-        plugins: {
-          datalabels: {
-            display: false
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { labels: { font: { size: 14 } } },
+            title: { display: true, text: 'Evoluția notelor la română (ri vs ra)', font: { size: 20 } },
+            tooltip: {
+              enabled: true,
+              mode: 'index',
+              intersect: false,
+            },
+            datalabels: { display: false }
           },
-          title: {
-            display: true,
-            text: 'Evoluția notelor la română (ri vs ra)',
-            font: {
-              size: 24
-            }
-          },
-          legend: {
-            labels: {
-              font: {
-                size: 16 
-              }
-            }
-          },
-          tooltip: {
-            enabled: true,
-            callbacks: {
-              label: (context) => {
-                const idx = context.dataIndex ?? 0;
-                const ri = riValues[idx];
-                const ra = raValues[idx];
-                return [`Nota inițială: ${ri.toFixed(2)}`, `Nota după contestație: ${ra.toFixed(2)}`];
-              }
-            }
-          }
+          elements: { point: { radius: 0 } },
+          scales: { y: { beginAtZero: false } }
         }
-      }
-    });
-
-    new Chart('chartDeviatie', {
-      type: 'bar',
-      data: {
-        labels,
-        datasets: [{
-          label: 'Diferență (ra - ri)',
-          data: deviation,
-          backgroundColor: deviation.map(v => v >= 0 ? 'green' : 'red')
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          datalabels: {
-            display: false
-          },
-          title: {
-            display: true,
-            text: 'Devierea față de nota inițială (ra - ri)',
-            font: {
-              size: 24
-            }
-          },
-          legend: {
-            labels: {
-              font: {
-                size: 16 
-              }
-            }
-          },
-          tooltip: {
-            callbacks: {
-              label: (context) => {
-                const idx = context.dataIndex ?? 0;
-                const val = context.dataset.data[idx] as number;
-                const ri = riValues[idx];
-                const ra = raValues[idx];
-                return [`Diferență: ${val.toFixed(2)}`, `Inițial: ${ri.toFixed(2)}`, `Contestată: ${ra.toFixed(2)}`];
-              }
+      });
+    } else if (this.selectedChart === 'devierea') {
+  this.chartInstance = new Chart(this.chartCanvas.nativeElement, {
+    type: 'bar',
+    data: {
+      labels: this.labels,
+      datasets: [{
+        label: 'Diferență (ra - ri)',
+        data: this.deviation,
+        backgroundColor: this.deviation.map(v => v >= 0 ? 'green' : 'red')
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        title: { display: true, text: 'Devierea față de nota inițială (ra - ri)', font: { size: 20 } },
+        legend: { labels: { font: { size: 14 } } },
+        tooltip: {
+          enabled: true,
+          callbacks: {
+            label: (context) => {
+              const idx = context.dataIndex ?? 0;
+              const ri = this.riValues[idx];
+              const ra = this.raValues[idx];
+              const diff = this.deviation[idx];
+              return [
+                `Inițial: ${ri.toFixed(2)}`,
+                `Contestată: ${ra.toFixed(2)}`,
+                `Diferență: ${diff.toFixed(2)}`
+              ];
             }
           }
         },
-        scales: {
-          y: { beginAtZero: true }
-        }
-      }
-    });
+        datalabels: { display: false }
+      },
+      scales: { y: { beginAtZero: false } }
+    }
+  });
+} else if (this.selectedChart === 'differencesFrequency') {
+  const freqMap: Record<string, number> = {};
+  this.deviation.forEach(d => {
+    const key = d.toFixed(2);
+    freqMap[key] = (freqMap[key] || 0) + 1;
+  });
+  const keys = Object.keys(freqMap).sort((a, b) => parseFloat(a) - parseFloat(b));
+  const values = keys.map(k => freqMap[k]);
+
+  this.chartInstance = new Chart(this.chartCanvas.nativeElement, {
+    type: 'bar',
+    data: { labels: keys, datasets: [{ label: 'Număr studenți', data: values, backgroundColor: 'purple' }] },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        title: { display: true, text: 'Frecvența diferențelor (ra - ri)', font: { size: 20 } },
+        tooltip: {
+          enabled: true,
+          callbacks: {
+            label: (context) => {
+              const diff = context.label;
+              const count = context.raw as number;
+              return [
+                `Diferență: ${diff}`,
+                `Număr studenți: ${count}`
+              ];
+            }
+          }
+        },
+        datalabels: { display: false }
+      },
+      scales: { y: { beginAtZero: true } }
+    }
+  });
+}
   }
 }

@@ -5,12 +5,7 @@ import { CommonModule } from '@angular/common';
 import {GroupedSpecializationRow} from '../../components/grouped-specialization-row/grouped-specialization-row';
 import {GroupedSpecialization} from '../../models/groupedSpecialization';
 import {RouterLink} from '@angular/router';
-
-interface Candidate {
-  h: string; // liceu + specialization combined string
-  sp: string;
-  madm: string;
-}
+import { Candidate } from './grad-ocupare.model';
 
 @Component({
   selector: 'app-occupancy',

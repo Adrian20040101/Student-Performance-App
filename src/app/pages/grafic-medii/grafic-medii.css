@@ -1,41 +1,114 @@
-.grafic-container {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 1rem;
+.grafic-layout {
+  display: flex;
+  height: 98vh;
   font-family: Arial, sans-serif;
+  gap: 1rem;
 }
 
-h2 {
-  text-align: center;
-  margin-bottom: 1rem;
-}
-
-label {
-  font-weight: bold;
-  display: block;
-  margin-bottom: 0.5rem;
-}
-
-select {
-  width: 100%;
-  padding: 0.5rem;
-  font-size: 14px;
-  margin-bottom: 1rem;
-  border-radius: 4px;
+.sidebar-wrapper {
+  width: 40%;
   border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  background-color: #fff;
+  padding: 1rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
-canvas {
-  display: block;
-  width: 100% !important;
-  height: auto !important;
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.sidebar h2 {
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.multi-select-container {
+  flex: 1;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.multi-select-wrapper {
+  flex: 1;
+  overflow-x: auto;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.multi-select-option {
+  padding: 0.5rem 0.75rem;
+  white-space: nowrap;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+
+.multi-select-option.selected {
+  background-color: #1976d2;
+  color: white;
+}
+
+.sidebar .info {
+  background-color: #f2f2f2;
+  border-left: 4px solid #2196F3;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  padding: 0.75rem 1rem;
+  font-size: 14px;
   margin-top: 1rem;
 }
 
-.info {
-  background-color: #f2f2f2;
-  border-left: 4px solid #2196F3;
-  padding: 0.75rem 1rem;
+canvas {
+  width: 100%;
+  height: 100%;
+}
+
+.chart-area {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fafafa;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  padding: 1rem;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.placeholder-text {
+  font-size: 1.2rem;
+  color: #666;
+  text-align: center;
+}
+
+.back-btn {
+  align-self: flex-start;
+  background-color: transparent;
+  border: 1px solid #1976d2;
+  color: #1976d2;
+  padding: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
   margin-bottom: 1rem;
-  font-size: 14px;
+  transition: background-color 0.2s;
+  border-radius: 4px;
+}
+
+.back-btn:hover {
+  background-color: #e3f2fd;
 }

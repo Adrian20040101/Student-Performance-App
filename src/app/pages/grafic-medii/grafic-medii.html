@@ -1,17 +1,40 @@
-<div class="grafic-container">
-  <h2>Grafic poziție ultimul admis</h2>
+<div class="grafic-layout">
+  <div class="sidebar-wrapper">
+    <div class="sidebar">
+      <button class="back-btn" [routerLink]="['/']">Înapoi</button>
+      <h2>Grafic poziție ultimul admis</h2>
 
-  <label for="selectOptiuni">Selectează licee + specializări de comparat:</label>
-  <select id="selectOptiuni" multiple [(ngModel)]="selectedOptions" (change)="updateChart()">
-    <option *ngFor="let opt of options" [value]="opt">{{ opt }}</option>
-  </select>
+      <label for="selectOptiuni">Selectează licee + specializări de comparat:</label>
+      <div class="multi-select-container">
+        <div class="multi-select-wrapper">
+          <div
+            class="multi-select-option"
+            *ngFor="let opt of options"
+            [class.selected]="selectedOptions.includes(opt)"
+            (click)="toggleOption(opt)"
+          >
+            {{ opt }}
+          </div>
+        </div>
+      </div>
 
-  <div class="info">
-    <p>
-      Poziția este determinată după ordonarea descrescătoare a mediilor și indică
-      <strong>locul ocupat în clasament</strong> de candidatul cu <em>cea mai mică medie admisă</em>.
-    </p>
+      <div class="info">
+        <p>
+          Poziția este determinată după ordonarea descrescătoare a mediilor și indică
+          <strong>locul ocupat în clasament</strong> de candidatul cu <em>cea mai mică medie admisă</em>.
+        </p>
+      </div>
+    </div>
   </div>
 
-  <canvas id="myChart" width="800" height="400"></canvas>
+  <div class="chart-area">
+    <ng-container *ngIf="selectedOptions.length > 0; else noSelection">
+      <canvas #myChart></canvas>
+    </ng-container>
+    <ng-template #noSelection>
+      <div class="placeholder-text">
+        Selectează cel puțin un liceu pentru a afișa graficul.
+      </div>
+    </ng-template>
+  </div>
 </div>

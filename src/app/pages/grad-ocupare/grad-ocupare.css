@@ -1,19 +1,62 @@
 .container {
-  width: 90vw;
-  margin: 2rem auto;
-  padding: 2rem 3rem;       /* more padding */
+  width: 100%;
+  height: 98vh;
+  padding: 1rem;
   background-color: #fff;
-  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  border: 1px solid #ccc;
   border-radius: 8px;
-  font-size: 1.3rem;       /* bigger font size (~20.8px) */
+  font-size: 1.3rem; 
   color: #222;
   box-sizing: border-box;
   line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.content-wrapper {
+  flex: 1; 
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.back-btn {
+  align-self: flex-start;
+  background-color: transparent;
+  border: 1px solid #1976d2;
+  color: #1976d2;
+  padding: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  transition: background-color 0.2s;
+  border-radius: 4px;
+}
+
+.back-btn:hover {
+  background-color: #e3f2fd;
+}
+
+h2 {
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 1.5rem;
+  font-size: 1.7rem;
+  text-align: center;
+}
+
+h3 {
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 1.5rem;
+  font-size: 1.7rem;
 }
 
 .input-label {
   display: block;
   font-weight: 600;
+  margin-top: 0.5rem;
   margin-bottom: 1.5rem;
   font-size: 1.3rem;
 }
@@ -30,7 +73,7 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 1.5rem;
-  font-size: 1.3rem;        /* bigger font size */
+  font-size: 1.3rem;
 }
 
 thead th {
@@ -44,29 +87,6 @@ thead th {
 
 tbody tr:nth-child(even) {
   background-color: #f2f4f8;
-}
-
-.back-btn {
-  align-self: flex-start;
-  background-color: transparent;
-  border: 1px solid #1976d2;
-  color: #1976d2;
-  padding: 0.5rem;
-  font-size: 1rem;
-  cursor: pointer;
-  margin-bottom: 1rem;
-  transition: background-color 0.2s;
-}
-
-.back-btn:hover {
-  background-color: #e3f2fd;
-}
-
-h2, h3 {
-  font-weight: 700;
-  color: #111;
-  margin-bottom: 1.5rem;
-  font-size: 1.7rem;
 }
 
 .loading-text {
@@ -85,4 +105,17 @@ h2, h3 {
 
 .results-container {
   width: 100%;
+}
+
+.chart-container {
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.chart-container canvas {
+  width: 100%;
+  height: 500px;
 }
