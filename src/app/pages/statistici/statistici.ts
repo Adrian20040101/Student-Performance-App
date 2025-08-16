@@ -4,7 +4,7 @@ import { NgForOf } from '@angular/common';
 import { Chart, ArcElement, Tooltip, Legend, ChartType } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Options } from 'chartjs-plugin-datalabels/types/options';
-import { StatisticiService } from './statistici.service';
+import { judetMap, StatisticiService } from './statistici.service';
 import { BacData } from './statistici.model';
 import { RouterModule } from '@angular/router';
 
@@ -26,8 +26,13 @@ declare module 'chart.js' {
 })
 export class Statistici implements OnInit, AfterViewInit {
   allData: BacData[] = [];
+  judetSelectat = '';
+  judetMap = judetMap;
+  citySelectata = '';
   unitateSelectata = '';
   specializareSelectata = '';
+  judete: string[] = [];
+  cities: string[] = [];
   unitati: string[] = [];
   specializari: string[] = [];
   totalEleviText = 'Se încarcă date...';
@@ -43,37 +48,52 @@ export class Statistici implements OnInit, AfterViewInit {
 
   async fetchData(): Promise<void> {
     this.allData = await this.statisticiService.fetchParsedBacData();
-    this.populateDropdowns();
+    this.populateJudete();
     this.updateChart();
   }
 
-  populateDropdowns(): void {
-    const unitStats: Record<string, { total: number; peste9: number }> = {};
+  populateJudete(): void {
+    this.judete = Array.from(new Set(this.allData.map(d => d.judet))).sort();
+  }
 
-    this.allData.forEach(({ unitate, media }) => {
-      if (!unitStats[unitate]) {
-        unitStats[unitate] = { total: 0, peste9: 0 };
-      }
-      unitStats[unitate].total++;
-      if (media >= 9) unitStats[unitate].peste9++;
-    });
+  onJudetChange(judet: string): void { 
+    this.judetSelectat = judet; 
+    const filteredByJudet = judet ? this.allData.filter(d => d.judet === judet) : this.allData; 
+    this.cities = Array.from(new Set(filteredByJudet.map(d => d.city))).sort(); 
+    this.unitati = Array.from(new Set(filteredByJudet.map(d => d.unitate))).sort(); 
+    this.specializari = Array.from(new Set(filteredByJudet.map(d => d.specializare))).sort(); 
+    this.citySelectata = ''; 
+    this.unitateSelectata = ''; 
+    this.specializareSelectata = ''; 
+    this.updateChart(); 
+  }
 
-    const sortedUnitati = Object.entries(unitStats)
-      .map(([nume, stats]) => ({
-        nume,
-        procent: (stats.peste9 / stats.total) * 100
-      }))
-      .sort((a, b) => b.procent - a.procent);
+  onCityChange(city: string): void {
+    this.citySelectata = city;
 
-    this.unitati = sortedUnitati.map(u => u.nume);
-    this.specializari = Array.from(new Set(this.allData.map(d => d.specializare))).sort();
+    const filtered = this.allData.filter(d =>
+      (!this.judetSelectat || d.judet === this.judetSelectat) &&
+      (
+        !this.citySelectata ||
+        d.city === this.citySelectata ||
+        (this.judetSelectat === 'B' && this.citySelectata === 'București' && (!d.city || d.city.trim() === ''))
+      )
+    );
+
+    this.unitati = Array.from(new Set(filtered.map(d => d.unitate))).sort();
+    this.specializari = Array.from(new Set(filtered.map(d => d.specializare))).sort();
+    this.unitateSelectata = '';
+    this.specializareSelectata = '';
+    this.updateChart();
   }
 
   onUnitateChange(unit: string): void {
     this.unitateSelectata = unit;
-    const filteredData = this.unitateSelectata
-      ? this.allData.filter(d => d.unitate === this.unitateSelectata)
-      : this.allData;
+    const filteredData = this.allData.filter(d =>
+      (!this.judetSelectat || d.judet === this.judetSelectat) &&
+      (!this.citySelectata || d.city === this.citySelectata) &&
+      (!this.unitateSelectata || d.unitate === this.unitateSelectata)
+    );
 
     this.specializari = Array.from(new Set(filteredData.map(d => d.specializare))).sort();
     this.specializareSelectata = '';
@@ -87,6 +107,8 @@ export class Statistici implements OnInit, AfterViewInit {
 
   updateChart(): void {
     const filtered = this.allData.filter(d =>
+      (!this.judetSelectat || d.judet === this.judetSelectat) &&
+      (!this.citySelectata || d.city === this.citySelectata) &&
       (!this.unitateSelectata || d.unitate === this.unitateSelectata) &&
       (!this.specializareSelectata || d.specializare === this.specializareSelectata)
     );

@@ -11,12 +11,12 @@ const fs = require('fs');
 
   const ctx = await (async () => {
     try {
-      await page.waitForSelector('#PageNavigator', { timeout: 3000 });
+      await page.waitForSelector('#mainTable', { timeout: 3000 });
       return page;
     } catch {}
     for (const fr of page.frames()) {
       try {
-        await fr.waitForSelector('#PageNavigator', { timeout: 3000 });
+        await fr.waitForSelector('#mainTable', { timeout: 3000 });
         return fr;
       } catch {}
     }
@@ -24,22 +24,19 @@ const fs = require('fs');
   })();
 
   if (!ctx) {
-    console.error('#PageNavigator not found');
+    console.error('#mainTable not found');
     await browser.close();
     process.exit(1);
   }
-
-  const pages = await ctx.$$eval('#PageNavigator option', o => o.map(x => x.value));
-  console.log(`${pages.length} pages detected`);
 
   const all = [];
   const debugSamples = [];
   const wantDebugSamples = 3;
 
-  for (let p = 0; p < pages.length; p++) {
-    console.log(`Page ${p + 1}/${pages.length}`);
-    await ctx.selectOption('#PageNavigator', pages[p]);
-    await ctx.waitForSelector('#mainTable');
+  await ctx.waitForSelector('#mainTable');
+
+  while (true) {
+    console.log('Scraping current page...');
 
     const batch = await ctx.$$eval('#mainTable tbody tr', (rows) => {
       const cleanTxt = (el) => {
@@ -56,7 +53,6 @@ const fs = require('fs');
       const toRez = (s) => (s.match(/REUSIT|RESPINS|ADMIS|NEPREZENTAT|NEPROMOVAT|PROMOVAT/i) || [''])[0].toUpperCase();
       const toNum = (s) => s.replace(',', '.');
       const isGrade = (s) => /^-?\d+(?:[.,]\d+)?$/.test(s) || s === '-2';
-
       const mval = (s) => {
         const m = (s || '').match(/-?\d+(?:[.,]\d+)?/);
         return m ? toNum(m[0]) : '';
@@ -73,7 +69,7 @@ const fs = require('fs');
         const c2 = Array.from(r2.cells).map(cleanTxt);
 
         const rawCode = c1[1] || '';
-        const codMatch = rawCode.match(/[A-Z]{2}\d{5,}/);
+        const codMatch = rawCode.match(/[A-Z]{1,2}\d{5,}/);
         if (!codMatch) continue;
         const codCandidat = codMatch[0];
 
@@ -81,7 +77,6 @@ const fs = require('fs');
         const rezultatIdx = c1.length - 1;
         const medie       = mval(c1[medieIdx] || '');
         const rezultat    = toRez(c1[rezultatIdx] || '');
-
         const romanaCompetente = c1[9] || '';
 
         const r1RomNums = [c1[10], c1[11], c1[12]];
@@ -223,6 +218,15 @@ const fs = require('fs');
     });
 
     all.push(...batch);
+
+    const nextLink = await ctx.$('table[title="Pagina urmatoare"] a');
+    if (!nextLink) break;
+
+    const nextUrl = await nextLink.evaluate(a => a.href);
+    console.log('Navigating to next page:', nextUrl);
+
+    await ctx.goto(nextUrl, { waitUntil: 'load' });
+    await ctx.waitForSelector('#mainTable');
     await new Promise(r => setTimeout(r, 120));
   }
 
