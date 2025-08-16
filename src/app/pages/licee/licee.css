@@ -84,6 +84,16 @@ button:disabled {
   background-color: #e3f2fd;
 }
 
+.info {
+  background-color: #f2f2f2;
+  border-left: 4px solid #2196F3;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  padding: 0.75rem 1rem;
+  font-size: 14px;
+  margin-top: 1rem;
+}
+
 .results-pane {
   flex: 2;
   padding-left: 1rem;

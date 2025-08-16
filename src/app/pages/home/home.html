@@ -1,30 +1,63 @@
 <div class="home-container">
-  <h1>Bine ai venit la SchoolMatch</h1>
+  <header class="hero">
+    <h1>SchoolMatch</h1>
+    <p class="tagline">Platformă de analiză pentru admiterea la liceu și rezultatele la Bacalaureat</p>
+  </header>
 
   <div class="card-grid">
     <div class="nav-card" [routerLink]="['/licee']">
-      <h2>Explorează opțiunile de admitere la liceu</h2>
-      <p>Descoperă liceele și specializările în funcție de rezultatele la Evaluarea Națională.</p>
+      <div class="icon-wrapper">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 14l9-5-9-5-9 5 9 5z" />
+        </svg>
+      </div>
+      <h2>Licee & Admitere</h2>
+      <p>Explorează opțiunile de admitere bazate pe Evaluarea Națională.</p>
     </div>
 
     <div class="nav-card" [routerLink]="['/statistici']">
-      <h2>Analizează performanțele la Bacalaureat</h2>
-      <p>Vezi mediile BAC pe județ, oraș sau liceu și compară rezultatele.</p>
+      <div class="icon-wrapper">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M3 3v18h18M7 14l3-3 4 4 5-5" />
+        </svg>
+      </div>
+      <h2>Statistici Bacalaureat</h2>
+      <p>Compară mediile BAC pe județ, oraș sau liceu.</p>
     </div>
 
     <div class="nav-card" [routerLink]="['/grad-ocupare']">
-      <h2>Grad de ocupare pe specializări</h2>
-      <p>Află cât de ocupate sunt specializările, pornind de la o poziție în ierarhie.</p>
+      <div class="icon-wrapper">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M11 11V3h2v8h-2zm-4 4V7h2v8H7zm8 4V5h2v14h-2z" />
+        </svg>
+      </div>
+      <h2>Grad de Ocupare</h2>
+      <p>Vezi gradul de ocupare al specializărilor după poziția în ierarhie.</p>
     </div>
 
     <div class="nav-card" [routerLink]="['/istoric-contestatii']">
-      <h2>Istoric contestații</h2>
-      <p>Analizează evoluția contestațiilor la română, cu grafice și statistici.</p>
+      <div class="icon-wrapper">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 20h9M12 4H3" />
+        </svg>
+      </div>
+      <h2>Istoric Contestații</h2>
+      <p>Analizează evoluția contestațiilor și vezi statistici clare pe materii.</p>
     </div>
 
     <div class="nav-card" [routerLink]="['/istoric-medii']">
-      <h2>Istoric medii</h2>
-      <p>Analizează istoricul ultimelor medii.</p>
+      <div class="icon-wrapper">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </div>
+      <h2>Istoric Medii</h2>
+      <p>Urmărește evoluția mediilor de admitere din anii anteriori.</p>
     </div>
   </div>
 </div>

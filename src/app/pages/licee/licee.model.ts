@@ -21,10 +21,8 @@ export interface FilteredHighSchoolEntry {
   primaMedie: string;
   primaAbs: string;
   pozMin: number;
-  idMin: string;
   ultimaMedie: string;
   ultimaAbs: string;
   pozMax: number;
-  idMax: string;
   limba: string;
 }

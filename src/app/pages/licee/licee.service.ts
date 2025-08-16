@@ -109,11 +109,9 @@ export class HighSchoolService {
         primaMedie: prima.madm!,
         primaAbs: prima.mabs!,
         pozMin: rankMap.get(prima.n) ?? -1,
-        idMin: prima.n,
         ultimaMedie: ultima.madm!,
         ultimaAbs: ultima.mabs!,
         pozMax: rankMap.get(ultima.n) ?? -1,
-        idMax: ultima.n,
       });
     }
 

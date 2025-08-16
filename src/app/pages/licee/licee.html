@@ -17,6 +17,12 @@
 
       <button type="submit" [disabled]="formRef.invalid">Vezi liceele</button>
     </form>
+
+    <div class="info">
+      <p>
+        Liceele din listă sunt ordonate <strong> descrescător</strong> după <em>ultima medie de intrare.</em>
+      </p>
+    </div>
   </div>
 
   <div class="results-pane">
@@ -31,10 +37,10 @@
 
       <div *ngIf="filteredHighSchools.length > 0" class="results-scroll">
         <div *ngFor="let school of filteredHighSchools" class="match-card">
-          <h3>Liceu: {{ school.liceu }}</h3>
+          <h3>{{ school.liceu }}</h3>
           <p>Specializare: {{ sanitizeHtml(school.specializare) }}</p>
-          <p>Prima medie de intrare: {{ school.primaMedie }} (abs. {{ school.primaAbs }}) - poziția {{ school.pozMin }}, ID: {{ school.idMin }} 🛈</p>
-          <p>Ultima medie de intrare: {{ school.ultimaMedie }} (abs. {{ school.ultimaAbs }}) - poziția {{ school.pozMax }}, ID: {{ school.idMax }} 🛈</p>
+          <p>Prima medie de intrare: {{ school.primaMedie }} (abs. {{ school.primaAbs }})</p>
+          <p>Ultima medie de intrare: {{ school.ultimaMedie }} (abs. {{ school.ultimaAbs }})</p>
           <p>Pozitii în clasament pentru acest liceu: {{ school.pozMin }} - {{ school.pozMax }}</p>
         </div>
       </div>
