@@ -1,0 +1,136 @@
+{
+  "HOME": {
+    "TITLE": "SchoolMatch",
+    "TAGLINE": "Analyseplattform für Gymnasialaufnahme und Abiturergebnisse",
+    "CARDS": {
+      "LYCEUM": {
+        "TITLE": "Gymnasien & Aufnahme",
+        "DESC": "Erkunde Aufnahmemöglichkeiten basierend auf der nationalen Bewertung."
+      },
+      "STATS": {
+        "TITLE": "Abiturstatistiken",
+        "DESC": "Vergleiche Abiturschnitte nach Landkreis, Stadt oder Schule."
+      },
+      "OCCUPANCY": {
+        "TITLE": "Auslastungsgrad",
+        "DESC": "Sieh den Auslastungsgrad der Fachrichtungen nach Rangposition."
+      },
+      "APPEALS": {
+        "TITLE": "Einspruchsverlauf",
+        "DESC": "Analysiere die Entwicklung der Einsprüche und sieh klare Statistiken nach Fächern."
+      },
+      "AVERAGES": {
+        "TITLE": "Notenverlauf Aufnahme",
+        "DESC": "Verfolge die Entwicklung der Aufnahmeschnitte aus den Vorjahren."
+      }
+    }
+  },
+  "FINDER": {
+    "BACK": "Zurück",
+    "TITLE": "Finde passende Gymnasien",
+    "FORM": {
+      "YEAR_LABEL": "Jahr:",
+      "YEAR_PLACEHOLDER": "Wähle ein Jahr",
+      "AVERAGE_LABEL": "Durchschnitt nationale Bewertung:",
+      "GRAD_AVERAGE_LABEL": "Abschlussdurchschnitt (optional):",
+      "SUBMIT": "Gymnasien anzeigen"
+    },
+    "INFO": "Die Schulen in der Liste sind <strong>absteigend</strong> nach dem <em>letzten Aufnahme-Durchschnitt</em> sortiert.",
+    "PLACEHOLDER": {
+      "INITIAL": "Fülle das Formular aus, um verfügbare Optionen zu sehen.",
+      "NO_RESULTS": "Keine passenden Gymnasien für die eingegebenen Kriterien gefunden."
+    },
+    "RESULTS": {
+      "SPECIALIZATION": "Spezialisierung:",
+      "FIRST_AVG": "Erster Aufnahme-Durchschnitt:",
+      "LAST_AVG": "Letzter Aufnahme-Durchschnitt:",
+      "RANK_POSITIONS": "Platzierungen für dieses Gymnasium:"
+    }
+  },
+  "BAC_STATS": {
+    "BACK": "Zurück",
+    "TITLE": "Analysiere die Leistungen am Abitur",
+    "FILTERS": {
+      "COUNTY": "Bezirk:",
+      "CITY": "Stadt:",
+      "SCHOOL": "Schule:",
+      "SPECIALIZATION": "Fachrichtung:",
+      "ALL": "Alle"
+    },
+    "CHART": {
+      "SUMMARY": "Ausgewählte Schüler: {{total}} | Durchschnittsnote: {{average}}",
+      "TITLE": "Verteilung der Noten nach Intervallen",
+      "LABELS": {
+        "NOT_PRESENT": "Nicht erschienen",
+        "FAILED": "Nicht bestanden",
+        "SIX_TO_SEVEN": "6-7",
+        "SEVEN_TO_EIGHT": "7-8",
+        "EIGHT_TO_NINE": "8-9",
+        "NINE_TO_TEN": "9-10"
+      },
+      "TOOLTIP_SUFFIX": "Schüler"
+    }
+  },
+  "APPEALS_HISTORY": {
+    "BACK": "Zurück",
+    "TITLE": "Einspruchsverlauf für Rumänisch",
+    "STATS": {
+      "TOTAL": "Gesamt:",
+      "INCREASED": "Gesteigert:",
+      "DECREASED": "Gesunken:",
+      "UNCHANGED": "Unverändert:",
+      "AVG_DIFF": "Durchschnittliche Differenz:"
+    },
+    "CHART_TOGGLE": {
+      "EVOLUTION": "Notenentwicklung",
+      "DEVIATION": "Notenabweichung",
+      "DIFF_FREQ": "Verteilung der Differenzen"
+    },
+    "CHART": {
+      "EVOLUTION": "Notenentwicklung (ri vs ra)",
+      "DEVIATION": "Abweichung von der Anfangsnote (ra - ri)",
+      "DIFF_FREQ": "Häufigkeit der Notendifferenzen (ra - ri)",
+      "RI_LABEL": "Anfangsnote (ri)",
+      "RA_LABEL": "Note nach Berufung (ra)",
+      "DIFF_LABEL": "Differenz (ra - ri)",
+      "STUDENTS_LABEL": "Anzahl der Schüler",
+      "TOOLTIP_INITIAL": "Anfangs",
+      "FREQ_DIFF": "Häufigkeit der Unterschiede (ra - ri)",
+      "TOOLTIP_DIFF": "Differenz",
+      "TOOLTIP_NUM_STUDENTS": "Anzahl der Schüler"
+    }
+  },
+  "LAST_ADMITTED": {
+    "BACK": "Zurück",
+    "TITLE": "Diagramm der letzten zugelassenen Position",
+    "MULTI_SELECT_LABEL": "Wähle Gymnasien + Spezialisierungen zum Vergleichen:",
+    "INFO": "Die Position wird nach absteigender Reihenfolge der Durchschnitte bestimmt und zeigt die <strong>Platzierung</strong> des Kandidaten mit dem <em>niedrigsten zugelassenen Durchschnitt</em> an.",
+    "PLACEHOLDER": "Wähle mindestens eine Schule aus, um das Diagramm anzuzeigen.",
+    "CHART": {
+      "TITLE": "Position des zuletzt Zugelassenen (Simulation)",
+      "Y_AXIS": "Platz im Ranking",
+      "X_AXIS": "Jahr",
+      "TOOLTIP_POSITION": "Letzte Position"
+    }
+  },
+  "OCCUPANCY": {
+    "BACK": "Zurück",
+    "TITLE": "Auslastung der Gymnasien 2024",
+    "POSITION_LABEL": "Position im Ranking eingeben:",
+    "LOADING": "Daten werden geladen...",
+    "SECTIONS": {
+      "COMPLETE": "Vollständig besetzt",
+      "PARTIAL": "Teilweise besetzt",
+      "UNOCCUPIED": "Unbesetzt"
+    },
+    "TABLE": {
+      "SCHOOL_SPEC": "Gymnasium + Spezialisierung",
+      "POS_OCCUPIED": "Besetzte Positionen",
+      "SPOTS_OCCUPIED": "Besetzte Plätze",
+      "SPOTS_FREE": "Freie Plätze",
+      "PERCENT_OCCUPIED": "% Auslastung",
+      "LAST_AVG": "Letzter Durchschnitt"
+    },
+    "NO_RESULTS": "Für deine Position wurden keine Ergebnisse gefunden."
+  }
+}

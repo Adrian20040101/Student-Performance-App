@@ -1,32 +1,30 @@
 <div class="container">
   <div class="left-pane">
-    <button class="back-btn" [routerLink]="['/']">Înapoi</button>
-    <h2 class="form-title">Analizează performanțele la Bacalaureat</h2>
+    <button class="back-btn" [routerLink]="['/']">{{ 'BAC_STATS.BACK' | translate }}</button>
+    <h2 class="form-title">{{ 'BAC_STATS.TITLE' | translate }}</h2>
 
     <div class="filters">
-      <label for="judetDropdown">Județ:</label>
+      <label for="judetDropdown">{{ 'BAC_STATS.FILTERS.COUNTY' | translate }}</label>
       <select id="judetDropdown" [(ngModel)]="judetSelectat" (change)="onJudetChange(judetSelectat)">
-        <option value="">Toate</option>
-        <option *ngFor="let code of judete" [value]="code">
-          {{ judetMap[code] || code }}
-        </option>
+        <option value="">{{ 'BAC_STATS.FILTERS.ALL' | translate }}</option>
+        <option *ngFor="let code of judete" [value]="code">{{ judetMap[code] || code }}</option>
       </select>
 
-      <label for="cityDropdown">Oraș:</label>
+      <label for="cityDropdown">{{ 'BAC_STATS.FILTERS.CITY' | translate }}</label>
       <select id="cityDropdown" [(ngModel)]="citySelectata" (change)="onCityChange(citySelectata)">
-        <option value="">Toate</option>
+        <option value="">{{ 'BAC_STATS.FILTERS.ALL' | translate }}</option>
         <option *ngFor="let c of cities" [value]="c">{{ c }}</option>
       </select>
 
-      <label for="unitateDropdown">Unitate de învățământ:</label>
+      <label for="unitateDropdown">{{ 'BAC_STATS.FILTERS.SCHOOL' | translate }}</label>
       <select id="unitateDropdown" [(ngModel)]="unitateSelectata" (change)="onUnitateChange(unitateSelectata)">
-        <option value="">Toate</option>
+        <option value="">{{ 'BAC_STATS.FILTERS.ALL' | translate }}</option>
         <option *ngFor="let unitate of unitati" [value]="unitate">{{ unitate }}</option>
       </select>
 
-      <label for="specializareDropdown">Specializare:</label>
+      <label for="specializareDropdown">{{ 'BAC_STATS.FILTERS.SPECIALIZATION' | translate }}</label>
       <select id="specializareDropdown" [(ngModel)]="specializareSelectata" (change)="onSpecializareChange(specializareSelectata)">
-        <option value="">Toate</option>
+        <option value="">{{ 'BAC_STATS.FILTERS.ALL' | translate }}</option>
         <option *ngFor="let spec of specializari" [value]="spec">{{ spec }}</option>
       </select>
     </div>

@@ -1,29 +1,41 @@
 <div class="container">
-  <button class="back-btn" [routerLink]="['/']">Înapoi</button>
-  <h1>Istoric contestații la română</h1>
+  <button class="back-btn" [routerLink]="['/']">{{ 'APPEALS_HISTORY.BACK' | translate }}</button>
+  <h1>{{ 'APPEALS_HISTORY.TITLE' | translate }}</h1>
 
   <div class="statistics-container">
     <div class="stat-box">
-      <strong>Total:</strong> {{ statistics.total }}
+      <strong>{{ 'APPEALS_HISTORY.STATS.TOTAL' | translate }}</strong>: {{ statistics.total }}
     </div>
     <div class="stat-box">
-      <strong>Crescute:</strong> {{ statistics.crescute }}
+      <strong>{{ 'APPEALS_HISTORY.STATS.INCREASED' | translate }}</strong>: {{ statistics.crescute }}
     </div>
     <div class="stat-box">
-      <strong>Scăzute:</strong> {{ statistics.scazute }}
+      <strong>{{ 'APPEALS_HISTORY.STATS.DECREASED' | translate }}</strong>: {{ statistics.scazute }}
     </div>
     <div class="stat-box">
-      <strong>Neschimbat:</strong> {{ statistics.neschimbat }}
+      <strong>{{ 'APPEALS_HISTORY.STATS.UNCHANGED' | translate }}</strong>: {{ statistics.neschimbat }}
     </div>
     <div class="stat-box">
-      <strong>Media diferență:</strong> {{ statistics.mediaDiferenta }}
+      <strong>{{ 'APPEALS_HISTORY.STATS.AVG_DIFF' | translate }}</strong>: {{ statistics.mediaDiferenta }}
     </div>
   </div>
 
   <div class="chart-toggle">
-    <button [class.active]="selectedChart==='evolutie'" (click)="toggleChart('evolutie')">Evoluția notelor</button>
-    <button [class.active]="selectedChart==='devierea'" (click)="toggleChart('devierea')">Devierea notelor</button>
-    <button [class.active]="selectedChart==='differencesFrequency'" (click)="toggleChart('differencesFrequency')">Distribuția diferențelor</button>
+    <button 
+      [class.active]="selectedChart==='evolutie'" 
+      (click)="toggleChart('evolutie')">
+      {{ 'APPEALS_HISTORY.CHART_TOGGLE.EVOLUTION' | translate }}
+    </button>
+    <button 
+      [class.active]="selectedChart==='devierea'" 
+      (click)="toggleChart('devierea')">
+      {{ 'APPEALS_HISTORY.CHART_TOGGLE.DEVIATION' | translate }}
+    </button>
+    <button 
+      [class.active]="selectedChart==='differencesFrequency'" 
+      (click)="toggleChart('differencesFrequency')">
+      {{ 'APPEALS_HISTORY.CHART_TOGGLE.DIFF_FREQ' | translate }}
+    </button>
   </div>
 
   <div class="chart-wrapper">

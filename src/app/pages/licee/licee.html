@@ -1,47 +1,71 @@
 <div class="container">
   <div class="left-pane">
-    <button class="back-btn" [routerLink]="['/']">Înapoi</button>
-    <h2 class="form-title">Găsește licee potrivite</h2>
+    <button class="back-btn" [routerLink]="['/']">{{ 'FINDER.BACK' | translate }}</button>
+    <h2 class="form-title">{{ 'FINDER.TITLE' | translate }}</h2>
+
     <form (ngSubmit)="onSubmit()" #formRef="ngForm">
-      <label for="an">An:</label>
-      <select id="an" name="an" [(ngModel)]="selectedYear" (change)="onYearChange($event)" required>
-        <option value="" disabled>Selectează un an</option>
+      <label for="an">{{ 'FINDER.FORM.YEAR_LABEL' | translate }}</label>
+      <select
+        id="an"
+        name="an"
+        [(ngModel)]="selectedYear"
+        (change)="onYearChange($event)"
+        required
+      >
+        <option value="" disabled>{{ 'FINDER.FORM.YEAR_PLACEHOLDER' | translate }}</option>
         <option *ngFor="let an of years" [value]="an">{{ an }}</option>
       </select>
 
-      <label for="medie">Media Evaluare Națională:</label>
-      <input type="number" id="medie" name="medie" step="0.01" min="1" max="10" [(ngModel)]="userAverage" required />
+      <label for="medie">{{ 'FINDER.FORM.AVERAGE_LABEL' | translate }}</label>
+      <input
+        type="number"
+        id="medie"
+        name="medie"
+        step="0.01"
+        min="1"
+        max="10"
+        [(ngModel)]="userAverage"
+        required
+      />
 
-      <label for="medieGimnaziu">Media de absolvire (opțional):</label>
-      <input type="number" id="medieGimnaziu" name="medieGimnaziu" step="0.01" min="1" max="10" [(ngModel)]="userGradAverage" />
+      <label for="medieGimnaziu">{{ 'FINDER.FORM.GRAD_AVERAGE_LABEL' | translate }}</label>
+      <input
+        type="number"
+        id="medieGimnaziu"
+        name="medieGimnaziu"
+        step="0.01"
+        min="1"
+        max="10"
+        [(ngModel)]="userGradAverage"
+      />
 
-      <button type="submit" [disabled]="formRef.invalid">Vezi liceele</button>
+      <button type="submit" [disabled]="formRef.invalid">
+        {{ 'FINDER.FORM.SUBMIT' | translate }}
+      </button>
     </form>
 
     <div class="info">
-      <p>
-        Liceele din listă sunt ordonate <strong> descrescător</strong> după <em>ultima medie de intrare.</em>
-      </p>
+      <p [innerHTML]="'FINDER.INFO' | translate"></p>
     </div>
   </div>
 
   <div class="results-pane">
     <div class="results-wrapper">
       <div class="placeholder-box" *ngIf="!hasSearched">
-        <p class="placeholder-text">Completează formularul pentru a vedea opțiunile disponibile.</p>
+        <p class="placeholder-text">{{ 'FINDER.PLACEHOLDER.INITIAL' | translate }}</p>
       </div>
 
       <div class="placeholder-box" *ngIf="hasSearched && filteredHighSchools.length === 0">
-        <p class="placeholder-text">Nu s-au găsit licee potrivite pentru criteriile introduse.</p>
+        <p class="placeholder-text">{{ 'FINDER.PLACEHOLDER.NO_RESULTS' | translate }}</p>
       </div>
 
       <div *ngIf="filteredHighSchools.length > 0" class="results-scroll">
         <div *ngFor="let school of filteredHighSchools" class="match-card">
           <h3>{{ school.liceu }}</h3>
-          <p>Specializare: {{ sanitizeHtml(school.specializare) }}</p>
-          <p>Prima medie de intrare: {{ school.primaMedie }} (abs. {{ school.primaAbs }})</p>
-          <p>Ultima medie de intrare: {{ school.ultimaMedie }} (abs. {{ school.ultimaAbs }})</p>
-          <p>Pozitii în clasament pentru acest liceu: {{ school.pozMin }} - {{ school.pozMax }}</p>
+          <p>{{ 'FINDER.RESULTS.SPECIALIZATION' | translate }} {{ sanitizeHtml(school.specializare) }}</p>
+          <p>{{ 'FINDER.RESULTS.FIRST_AVG' | translate }} {{ school.primaMedie }} (abs. {{ school.primaAbs }})</p>
+          <p>{{ 'FINDER.RESULTS.LAST_AVG' | translate }} {{ school.ultimaMedie }} (abs. {{ school.ultimaAbs }})</p>
+          <p>{{ 'FINDER.RESULTS.RANK_POSITIONS' | translate }} {{ school.pozMin }} - {{ school.pozMax }}</p>
         </div>
       </div>
     </div>

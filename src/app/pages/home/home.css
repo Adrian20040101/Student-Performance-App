@@ -17,6 +17,16 @@
   margin-bottom: 0.5rem;
 }
 
+.hero {
+  position: relative;
+}
+
+.lang-top-right {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
 .tagline {
   font-size: 1.15rem;
   color: #555;

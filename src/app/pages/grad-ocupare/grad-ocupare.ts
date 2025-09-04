@@ -6,12 +6,13 @@ import {GroupedSpecializationRow} from '../../components/grouped-specialization-
 import {GroupedSpecialization} from '../../models/groupedSpecialization';
 import {RouterLink} from '@angular/router';
 import { Candidate } from './grad-ocupare.model';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-occupancy',
   templateUrl: './grad-ocupare.html',
   standalone: true,
-  imports: [FormsModule, CommonModule, GroupedSpecializationRow, RouterLink],
+  imports: [FormsModule, CommonModule, GroupedSpecializationRow, RouterLink, TranslateModule],
   styleUrls: ['./grad-ocupare.css'],
 })
 export class GradOcupare {
@@ -21,7 +22,8 @@ export class GradOcupare {
   unoccupied: GroupedSpecialization[] = [];
   loading = false;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, public translate: TranslateService) {
+    translate.setFallbackLang('ro');
   }
 
   ngOnInit(): void {

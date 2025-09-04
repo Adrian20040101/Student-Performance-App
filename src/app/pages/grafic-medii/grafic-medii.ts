@@ -6,13 +6,14 @@ import { Chart, registerables } from 'chart.js';
 import { GraficMediiService } from './grafic-medii.service';
 import { GraficMediiData } from './grafic-medii.model';
 import { RouterModule } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 Chart.register(...registerables);
 
 @Component({
   selector: 'app-grafic-medii',
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule, RouterModule],
+  imports: [CommonModule, FormsModule, HttpClientModule, RouterModule, TranslateModule],
   templateUrl: './grafic-medii.html',
   styleUrls: ['./grafic-medii.css'],
   providers: [GraficMediiService]
@@ -26,7 +27,9 @@ export class GraficMedii implements AfterViewInit {
 
   @ViewChild('myChart', { static: false }) chartRef!: ElementRef<HTMLCanvasElement>;
 
-  constructor(private graficService: GraficMediiService) {}
+  constructor(private graficService: GraficMediiService, public translate: TranslateService) {
+    translate.setFallbackLang('ro');
+  }
 
   ngAfterViewInit(): void {
     this.loadData();
@@ -102,7 +105,7 @@ export class GraficMedii implements AfterViewInit {
           plugins: {
             title: {
               display: true,
-              text: 'Poziția ultimului admis (simulare)',
+              text: this.translate.instant('LAST_ADMITTED.CHART.TITLE'),
               font: { size: 18 }
             },
             legend: {
@@ -118,34 +121,38 @@ export class GraficMedii implements AfterViewInit {
               mode: 'nearest',
               intersect: false,
               callbacks: {
-                title: function() {
-                  return '';
-                },
-                label: function(context) {
+                title: function() { return ''; },
+                label: (context) => {
                   const positionValue = context.parsed.y;
                   const datasetLabel = context.dataset.label || '';
-
                   if (positionValue > 0) {
-                    return [datasetLabel, `Ultima Poziție: ${positionValue}`];
+                    return [
+                      datasetLabel,
+                      `${this.translate.instant('LAST_ADMITTED.CHART.TOOLTIP_POSITION')}: ${positionValue}`
+                    ];
                   }
                   return [datasetLabel];
                 }
               }
             },
-            datalabels: {
-              display: false
-            }
+            datalabels: { display: false }
           },
           interaction: { mode: 'nearest', intersect: false },
           scales: {
             y: {
               beginAtZero: false,
               reverse: false,
-              title: { display: true, text: 'Poziția în clasament' },
+              title: {
+                display: true,
+                text: this.translate.instant('LAST_ADMITTED.CHART.Y_AXIS')
+              },
               grid: { color: '#e0e0e0' }
             },
             x: {
-              title: { display: true, text: 'An' },
+              title: {
+                display: true,
+                text: this.translate.instant('LAST_ADMITTED.CHART.X_AXIS')
+              },
               grid: { color: '#f0f0f0' }
             }
           }

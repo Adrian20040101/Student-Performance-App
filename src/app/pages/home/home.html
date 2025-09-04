@@ -1,7 +1,8 @@
 <div class="home-container">
   <header class="hero">
-    <h1>SchoolMatch</h1>
-    <p class="tagline">Platformă de analiză pentru admiterea la liceu și rezultatele la Bacalaureat</p>
+    <h1>{{ 'HOME.TITLE' | translate }}</h1>
+    <p class="tagline">{{ 'HOME.TAGLINE' | translate }}</p>
+    <app-language-switcher class="lang-top-right"></app-language-switcher>
   </header>
 
   <div class="card-grid">
@@ -12,8 +13,8 @@
             d="M12 14l9-5-9-5-9 5 9 5z" />
         </svg>
       </div>
-      <h2>Licee & Admitere</h2>
-      <p>Explorează opțiunile de admitere bazate pe Evaluarea Națională.</p>
+      <h2>{{ 'HOME.CARDS.LYCEUM.TITLE' | translate }}</h2>
+      <p>{{ 'HOME.CARDS.LYCEUM.DESC' | translate }}</p>
     </div>
 
     <div class="nav-card" [routerLink]="['/statistici']">
@@ -23,8 +24,8 @@
             d="M3 3v18h18M7 14l3-3 4 4 5-5" />
         </svg>
       </div>
-      <h2>Statistici Bacalaureat</h2>
-      <p>Compară mediile BAC pe județ, oraș sau liceu.</p>
+      <h2>{{ 'HOME.CARDS.STATS.TITLE' | translate }}</h2>
+      <p>{{ 'HOME.CARDS.STATS.DESC' | translate }}</p>
     </div>
 
     <div class="nav-card" [routerLink]="['/grad-ocupare']">
@@ -34,8 +35,8 @@
             d="M11 11V3h2v8h-2zm-4 4V7h2v8H7zm8 4V5h2v14h-2z" />
         </svg>
       </div>
-      <h2>Grad de Ocupare</h2>
-      <p>Vezi gradul de ocupare al specializărilor după poziția în ierarhie.</p>
+      <h2>{{ 'HOME.CARDS.OCCUPANCY.TITLE' | translate }}</h2>
+      <p>{{ 'HOME.CARDS.OCCUPANCY.DESC' | translate }}</p>
     </div>
 
     <div class="nav-card" [routerLink]="['/istoric-contestatii']">
@@ -45,8 +46,8 @@
             d="M12 20h9M12 4H3" />
         </svg>
       </div>
-      <h2>Istoric Contestații</h2>
-      <p>Analizează evoluția contestațiilor și vezi statistici clare pe materii.</p>
+      <h2>{{ 'HOME.CARDS.APPEALS.TITLE' | translate }}</h2>
+      <p>{{ 'HOME.CARDS.APPEALS.DESC' | translate }}</p>
     </div>
 
     <div class="nav-card" [routerLink]="['/istoric-medii']">
@@ -56,8 +57,8 @@
             d="M4 6h16M4 12h16M4 18h16" />
         </svg>
       </div>
-      <h2>Istoric Medii</h2>
-      <p>Urmărește evoluția mediilor de admitere din anii anteriori.</p>
+      <h2>{{ 'HOME.CARDS.AVERAGES.TITLE' | translate }}</h2>
+      <p>{{ 'HOME.CARDS.AVERAGES.DESC' | translate }}</p>
     </div>
   </div>
 </div>

@@ -1,0 +1,137 @@
+{
+  "HOME": {
+    "TITLE": "SchoolMatch",
+    "TAGLINE": "Platformă de analiză pentru admiterea la liceu și rezultatele la Bacalaureat",
+    "CARDS": {
+      "LYCEUM": {
+        "TITLE": "Licee & Admitere",
+        "DESC": "Explorează opțiunile de admitere bazate pe Evaluarea Națională."
+      },
+      "STATS": {
+        "TITLE": "Statistici Bacalaureat",
+        "DESC": "Compară mediile BAC pe județ, oraș sau liceu."
+      },
+      "OCCUPANCY": {
+        "TITLE": "Grad de Ocupare",
+        "DESC": "Vezi gradul de ocupare al specializărilor după poziția în ierarhie."
+      },
+      "APPEALS": {
+        "TITLE": "Istoric Contestații",
+        "DESC": "Analizează evoluția contestațiilor și vezi statistici clare pe materii."
+      },
+      "AVERAGES": {
+        "TITLE": "Istoric Medii",
+        "DESC": "Urmărește evoluția mediilor de admitere din anii anteriori."
+      }
+    }
+  },
+  "FINDER": {
+    "BACK": "Înapoi",
+    "TITLE": "Găsește licee potrivite",
+    "FORM": {
+      "YEAR_LABEL": "An:",
+      "YEAR_PLACEHOLDER": "Selectează un an",
+      "AVERAGE_LABEL": "Media Evaluare Națională:",
+      "GRAD_AVERAGE_LABEL": "Media de absolvire (opțional):",
+      "SUBMIT": "Vezi liceele"
+    },
+    "INFO": "Liceele din listă sunt ordonate <strong> descrescător</strong> după <em>ultima medie de intrare.</em>",
+    "PLACEHOLDER": {
+      "INITIAL": "Completează formularul pentru a vedea opțiunile disponibile.",
+      "NO_RESULTS": "Nu s-au găsit licee potrivite pentru criteriile introduse."
+    },
+    "RESULTS": {
+      "SPECIALIZATION": "Specializare:",
+      "FIRST_AVG": "Prima medie de intrare:",
+      "LAST_AVG": "Ultima medie de intrare:",
+      "RANK_POSITIONS": "Pozitii în clasament pentru acest liceu:"
+    }
+  },
+  "BAC_STATS": {
+    "BACK": "Înapoi",
+    "TITLE": "Analizează performanțele la Bacalaureat",
+    "FILTERS": {
+      "COUNTY": "Județ:",
+      "CITY": "Oraș:",
+      "SCHOOL": "Unitate de învățământ:",
+      "SPECIALIZATION": "Specializare:",
+      "ALL": "Toate"
+    },
+    "CHART": {
+      "SUMMARY": "Total elevi selectați: {{total}} | Media generală: {{average}}",
+      "TITLE": "Distribuția mediilor pe intervale",
+      "LABELS": {
+        "NOT_PRESENT": "Neprezentat",
+        "FAILED": "Respins",
+        "SIX_TO_SEVEN": "6-7",
+        "SEVEN_TO_EIGHT": "7-8",
+        "EIGHT_TO_NINE": "8-9",
+        "NINE_TO_TEN": "9-10"
+      },
+      "TOOLTIP_SUFFIX": "elevi"
+    } 
+  },
+  "APPEALS_HISTORY": {
+    "BACK": "Înapoi",
+    "TITLE": "Istoric contestații la română",
+    "STATS": {
+      "TOTAL": "Total:",
+      "INCREASED": "Crescute:",
+      "DECREASED": "Scăzute:",
+      "UNCHANGED": "Neschimbat:",
+      "AVG_DIFF": "Media diferență:"
+    },
+    "CHART_TOGGLE": {
+      "EVOLUTION": "Evoluția notelor",
+      "DEVIATION": "Devierea notelor",
+      "DIFF_FREQ": "Distribuția diferențelor"
+    },
+    "CHART": {
+      "EVOLUTION": "Evoluția notelor la română (ri vs ra)",
+      "DEVIATION": "Devierea față de nota inițială (ra - ri)",
+      "DIFF_FREQ": "Frecvența diferențelor (ra - ri)",
+      "RI_LABEL": "Nota inițială (ri)",
+      "RA_LABEL": "Nota după contestație (ra)",
+      "DIFF_LABEL": "Diferență (ra - ri)",
+      "STUDENTS_LABEL": "Număr studenți",
+      "TOOLTIP_INITIAL": "Inițial",
+      "TOOLTIP_CONTESTED": "Contestată",
+      "TOOLTIP_DIFF": "Diferență",
+      "FREQ_DIFF": "Frecvența diferențelor (ra - ri)",
+      "TOOLTIP_NUM_STUDENTS": "Număr studenți"
+    }
+  },
+  "LAST_ADMITTED": {
+    "BACK": "Înapoi",
+    "TITLE": "Grafic poziție ultimul admis",
+    "MULTI_SELECT_LABEL": "Selectează licee + specializări de comparat:",
+    "INFO": "Poziția este determinată după ordonarea descrescătoare a mediilor și indică <strong>locul ocupat în clasament</strong> de candidatul cu <em>cea mai mică medie admisă</em>.",
+    "PLACEHOLDER": "Selectează cel puțin un liceu pentru a afișa graficul.",
+    "CHART": {
+      "TITLE": "Poziția ultimului admis (simulare)",
+      "Y_AXIS": "Poziția în clasament",
+      "X_AXIS": "An",
+      "TOOLTIP_POSITION": "Ultima Poziție"
+    }
+  },
+  "OCCUPANCY": {
+    "BACK": "Înapoi",
+    "TITLE": "Grad de ocupare licee 2024",
+    "POSITION_LABEL": "Introdu pozitia în ierarhie:",
+    "LOADING": "Se încarcă datele...",
+    "SECTIONS": {
+      "COMPLETE": "Complet ocupate",
+      "PARTIAL": "Parțial ocupate",
+      "UNOCCUPIED": "Neocupate"
+    },
+    "TABLE": {
+      "SCHOOL_SPEC": "Liceu + Specializare",
+      "POS_OCCUPIED": "Poziții ocupate",
+      "SPOTS_OCCUPIED": "Locuri ocupate",
+      "SPOTS_FREE": "Locuri libere",
+      "PERCENT_OCCUPIED": "% Ocupare",
+      "LAST_AVG": "Ultima medie"
+    },
+    "NO_RESULTS": "Nu s-au găsit rezultate pentru poziția ta."
+  }
+}

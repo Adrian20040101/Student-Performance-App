@@ -1,0 +1,27 @@
+<div class="lang-switcher">
+  <button
+    type="button"
+    class="lang-btn"
+    aria-haspopup="listbox"
+    [attr.aria-expanded]="isOpen"
+    (click)="toggle()">
+    <span class="globe" aria-hidden="true">🌐</span>
+    <span class="code">{{ currentLang.toUpperCase() }}</span>
+  </button>
+
+  <ul
+    *ngIf="isOpen"
+    class="menu"
+    role="listbox"
+    aria-label="Choose language">
+    <li
+      *ngFor="let l of languages"
+      role="option"
+      [attr.aria-selected]="l.code === currentLang"
+      (click)="select(l.code)"
+      tabindex="0">
+      <span class="check" *ngIf="l.code === currentLang" aria-hidden="true">✓</span>
+      <span class="label">{{ l.label }}</span>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,137 @@
+{
+  "HOME": {
+    "TITLE": "SchoolMatch",
+    "TAGLINE": "Analysis platform for high school admission and Baccalaureate results",
+    "CARDS": {
+      "LYCEUM": {
+        "TITLE": "High Schools & Admission",
+        "DESC": "Explore admission options based on the National Evaluation."
+      },
+      "STATS": {
+        "TITLE": "Baccalaureate Statistics",
+        "DESC": "Compare BAC averages by county, city, or school."
+      },
+      "OCCUPANCY": {
+        "TITLE": "Occupancy Rate",
+        "DESC": "See the occupancy rate of specializations by rank position."
+      },
+      "APPEALS": {
+        "TITLE": "Appeals History",
+        "DESC": "Analyze the evolution of appeals and view clear statistics by subject."
+      },
+      "AVERAGES": {
+        "TITLE": "Admission Averages History",
+        "DESC": "Track the evolution of admission averages from previous years."
+      }
+    }
+  },
+  "FINDER": {
+    "BACK": "Back",
+    "TITLE": "Find suitable high schools",
+    "FORM": {
+      "YEAR_LABEL": "Year:",
+      "YEAR_PLACEHOLDER": "Select a year",
+      "AVERAGE_LABEL": "National Evaluation Average:",
+      "GRAD_AVERAGE_LABEL": "Graduation average (optional):",
+      "SUBMIT": "View high schools"
+    },
+    "INFO": "The schools in the list are sorted <strong>descending</strong> by <em>last admission average.</em>",
+    "PLACEHOLDER": {
+      "INITIAL": "Fill in the form to see available options.",
+      "NO_RESULTS": "No suitable high schools were found for the entered criteria."
+    },
+    "RESULTS": {
+      "SPECIALIZATION": "Specialization:",
+      "FIRST_AVG": "First admission average:",
+      "LAST_AVG": "Last admission average:",
+      "RANK_POSITIONS": "Ranking positions for this high school:"
+    }
+  },
+  "BAC_STATS": {
+    "BACK": "Back",
+    "TITLE": "Analyze Baccalaureate Performance",
+    "FILTERS": {
+      "COUNTY": "County:",
+      "CITY": "City:",
+      "SCHOOL": "School:",
+      "SPECIALIZATION": "Specialization:",
+      "ALL": "All"
+    },
+    "CHART": {
+      "SUMMARY": "Total selected students: {{total}} | Average grade: {{average}}",
+      "TITLE": "Distribution of grades by interval",
+      "LABELS": {
+        "NOT_PRESENT": "Not Present",
+        "FAILED": "Failed",
+        "SIX_TO_SEVEN": "6-7",
+        "SEVEN_TO_EIGHT": "7-8",
+        "EIGHT_TO_NINE": "8-9",
+        "NINE_TO_TEN": "9-10"
+      },
+      "TOOLTIP_SUFFIX": "students"
+    }
+  },
+  "APPEALS_HISTORY": {
+    "BACK": "Back",
+    "TITLE": "Appeals History for Romanian",
+    "STATS": {
+      "TOTAL": "Total:",
+      "INCREASED": "Increased:",
+      "DECREASED": "Decreased:",
+      "UNCHANGED": "Unchanged:",
+      "AVG_DIFF": "Average difference:"
+    },
+    "CHART_TOGGLE": {
+      "EVOLUTION": "Grade evolution",
+      "DEVIATION": "Grade deviation",
+      "DIFF_FREQ": "Differences distribution"
+    },
+    "CHART": {
+      "EVOLUTION": "Score evolution (ri vs ra)",
+      "DEVIATION": "Deviation from initial score (ra - ri)",
+      "DIFF_FREQ": "Frequency of score differences (ra - ri)",
+      "RI_LABEL": "Initial score (ri)",
+      "RA_LABEL": "Score after appeal (ra)",
+      "DIFF_LABEL": "Difference (ra - ri)",
+      "STUDENTS_LABEL": "Number of students",
+      "TOOLTIP_INITIAL": "Initial",
+      "TOOLTIP_CONTESTED": "After appeal",
+      "FREQ_DIFF": "Frequency of differences (ra - ri)",
+      "TOOLTIP_DIFF": "Difference",
+      "TOOLTIP_NUM_STUDENTS": "Number of students"
+    }
+  },
+  "LAST_ADMITTED": {
+    "BACK": "Back",
+    "TITLE": "Last Admitted Position Chart",
+    "MULTI_SELECT_LABEL": "Select high schools + specializations to compare:",
+    "INFO": "The position is determined by descending order of averages and indicates the <strong>ranking position</strong> of the candidate with the <em>lowest admitted average</em>.",
+    "PLACEHOLDER": "Select at least one high school to display the chart.",
+    "CHART": {
+      "TITLE": "Last admitted position (simulation)",
+      "Y_AXIS": "Ranking position",
+      "X_AXIS": "Year",
+      "TOOLTIP_POSITION": "Last position"
+    }
+  },
+  "OCCUPANCY": {
+    "BACK": "Back",
+    "TITLE": "High School Occupancy 2024",
+    "POSITION_LABEL": "Enter position in ranking:",
+    "LOADING": "Loading data...",
+    "SECTIONS": {
+      "COMPLETE": "Fully Occupied",
+      "PARTIAL": "Partially Occupied",
+      "UNOCCUPIED": "Unoccupied"
+    },
+    "TABLE": {
+      "SCHOOL_SPEC": "High School + Specialization",
+      "POS_OCCUPIED": "Positions Occupied",
+      "SPOTS_OCCUPIED": "Spots Occupied",
+      "SPOTS_FREE": "Free Spots",
+      "PERCENT_OCCUPIED": "% Occupancy",
+      "LAST_AVG": "Last Average"
+    },
+    "NO_RESULTS": "No results found for your position."
+  }
+}

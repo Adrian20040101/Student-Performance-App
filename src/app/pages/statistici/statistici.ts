@@ -7,6 +7,7 @@ import { Options } from 'chartjs-plugin-datalabels/types/options';
 import { judetMap, StatisticiService } from './statistici.service';
 import { BacData } from './statistici.model';
 import { RouterModule } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 Chart.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 
@@ -20,7 +21,7 @@ declare module 'chart.js' {
   standalone: true,
   selector: 'app-statistici',
   templateUrl: './statistici.html',
-  imports: [FormsModule, NgForOf, RouterModule],
+  imports: [FormsModule, NgForOf, RouterModule, TranslateModule],
   styleUrls: ['./statistici.css'],
   providers: [StatisticiService]
 })
@@ -35,10 +36,12 @@ export class Statistici implements OnInit, AfterViewInit {
   cities: string[] = [];
   unitati: string[] = [];
   specializari: string[] = [];
-  totalEleviText = 'Se încarcă date...';
+  totalEleviText: string = '';
   chart: Chart | undefined;
 
-  constructor(private statisticiService: StatisticiService) {}
+  constructor(private statisticiService: StatisticiService, public translate: TranslateService) {
+    translate.setFallbackLang('ro');
+  }
 
   ngOnInit(): void {}
 
@@ -124,7 +127,15 @@ export class Statistici implements OnInit, AfterViewInit {
       else intervals[5]++;
     });
 
-    const labels = ['Neprezentat', 'Respins', '6-7', '7-8', '8-9', '9-10'];
+    const labels = [
+      this.translate.instant('BAC_STATS.CHART.LABELS.NOT_PRESENT'),
+      this.translate.instant('BAC_STATS.CHART.LABELS.FAILED'),
+      this.translate.instant('BAC_STATS.CHART.LABELS.SIX_TO_SEVEN'),
+      this.translate.instant('BAC_STATS.CHART.LABELS.SEVEN_TO_EIGHT'),
+      this.translate.instant('BAC_STATS.CHART.LABELS.EIGHT_TO_NINE'),
+      this.translate.instant('BAC_STATS.CHART.LABELS.NINE_TO_TEN')
+    ];
+
     const colors = ['#8e0000', '#e57373', '#fff176', '#dce775', '#66bb6a', '#1b5e20'];
 
     const ctx = (document.getElementById('chart') as HTMLCanvasElement).getContext('2d');
@@ -134,18 +145,14 @@ export class Statistici implements OnInit, AfterViewInit {
 
     this.chart = new Chart(ctx, {
       type: 'pie',
-      data: {
-        labels,
-        datasets: [{
-          data: intervals,
-          backgroundColor: colors,
-          borderColor: '#fff',
-          borderWidth: 1
-        }]
-      },
+      data: { labels, datasets: [{ data: intervals, backgroundColor: colors, borderColor: '#fff', borderWidth: 1 }] },
       options: {
         responsive: true,
         plugins: {
+          title: {
+            display: true,
+            text: this.translate.instant('BAC_STATS.CHART.TITLE')
+          },
           datalabels: {
             color: '#fff',
             font: { weight: 'bold', size: 14 },
@@ -153,30 +160,31 @@ export class Statistici implements OnInit, AfterViewInit {
               if (value === 0) return '';
               const total = context.chart.data.datasets[0].data.reduce((a: number, b: number) => a + b, 0);
               const percent = ((value / total) * 100).toFixed(1);
-              return `${value} elevi\n${percent}%`;
-            },
+              return `${value} ${this.translate.instant('BAC_STATS.CHART.TOOLTIP_SUFFIX')}\n${percent}%`;
+            }
           },
           tooltip: {
             callbacks: {
               label: (context: any) => {
                 const val = context.raw as number;
-                return `${context.label}: ${val} elevi`;
+                return `${context.label}: ${val} ${this.translate.instant('BAC_STATS.CHART.TOOLTIP_SUFFIX')}`;
               }
             }
           },
-          legend: { position: 'bottom' },
-          title: { display: true, text: 'Distribuția mediilor pe intervale' }
+          legend: { position: 'bottom' }
         }
       },
       plugins: [ChartDataLabels]
     });
 
     const totalElevi = filtered.length;
-    let text = `Total elevi selectați: ${totalElevi}`;
-    if (totalElevi > 0) {
-      const medieGenerala = (filtered.reduce((sum, e) => sum + e.media, 0) / totalElevi).toFixed(2);
-      text += ` | Media generală: ${medieGenerala}`;
-    }
-    this.totalEleviText = text;
+    const medieGenerala = totalElevi > 0
+      ? (filtered.reduce((sum, e) => sum + e.media, 0) / totalElevi).toFixed(2)
+      : '0.00';
+
+    this.totalEleviText = this.translate.instant('BAC_STATS.CHART.SUMMARY', {
+      total: totalElevi,
+      average: medieGenerala
+    });
   }
 }

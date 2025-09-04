@@ -3,6 +3,7 @@ import { Chart, registerables } from 'chart.js';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 Chart.register(...registerables);
 
@@ -25,7 +26,7 @@ interface ContestationStatistics {
   templateUrl: './istoric-contestatii.html',
   styleUrls: ['./istoric-contestatii.css'],
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, TranslateModule],
 })
 export class IstoricContestatii implements OnInit, AfterViewInit {
   statisticsError: string | null = null;
@@ -47,7 +48,9 @@ export class IstoricContestatii implements OnInit, AfterViewInit {
   raValues: number[] = [];
   deviation: number[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, public translate: TranslateService) {
+    translate.setFallbackLang('ro');
+  }
 
   ngOnInit(): void {
     this.loadData();
@@ -97,8 +100,8 @@ export class IstoricContestatii implements OnInit, AfterViewInit {
         data: {
           labels: this.labels,
           datasets: [
-            { label: 'Nota inițială (ri)', data: this.riValues, borderColor: 'blue', fill: false, tension: 0.1, pointRadius: 0 },
-            { label: 'Nota după contestație (ra)', data: this.raValues, borderColor: 'green', fill: false, tension: 0.1, pointRadius: 0 }
+            { label: this.translate.instant('APPEALS_HISTORY.CHART.RI_LABEL'), data: this.riValues, borderColor: 'blue', fill: false, tension: 0.1, pointRadius: 0 },
+            { label: this.translate.instant('APPEALS_HISTORY.CHART.RA_LABEL'), data: this.raValues, borderColor: 'green', fill: false, tension: 0.1, pointRadius: 0 }
           ]
         },
         options: {
@@ -106,7 +109,7 @@ export class IstoricContestatii implements OnInit, AfterViewInit {
           maintainAspectRatio: false,
           plugins: {
             legend: { labels: { font: { size: 14 } } },
-            title: { display: true, text: 'Evoluția notelor la română (ri vs ra)', font: { size: 20 } },
+            title: { display: true, text: this.translate.instant('APPEALS_HISTORY.CHART.EVOLUTION'), font: { size: 20 } },
             tooltip: {
               enabled: true,
               mode: 'index',
@@ -119,78 +122,93 @@ export class IstoricContestatii implements OnInit, AfterViewInit {
         }
       });
     } else if (this.selectedChart === 'devierea') {
-  this.chartInstance = new Chart(this.chartCanvas.nativeElement, {
-    type: 'bar',
-    data: {
-      labels: this.labels,
-      datasets: [{
-        label: 'Diferență (ra - ri)',
-        data: this.deviation,
-        backgroundColor: this.deviation.map(v => v >= 0 ? 'green' : 'red')
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        title: { display: true, text: 'Devierea față de nota inițială (ra - ri)', font: { size: 20 } },
-        legend: { labels: { font: { size: 14 } } },
-        tooltip: {
-          enabled: true,
-          callbacks: {
-            label: (context) => {
-              const idx = context.dataIndex ?? 0;
-              const ri = this.riValues[idx];
-              const ra = this.raValues[idx];
-              const diff = this.deviation[idx];
-              return [
-                `Inițial: ${ri.toFixed(2)}`,
-                `Contestată: ${ra.toFixed(2)}`,
-                `Diferență: ${diff.toFixed(2)}`
-              ];
-            }
-          }
+      this.chartInstance = new Chart(this.chartCanvas.nativeElement, {
+        type: 'bar',
+        data: {
+          labels: this.labels,
+          datasets: [{
+            label: this.translate.instant('APPEALS_HISTORY.CHART.DIFF_LABEL'),
+            data: this.deviation,
+            backgroundColor: this.deviation.map(v => v >= 0 ? 'green' : 'red')
+          }]
         },
-        datalabels: { display: false }
-      },
-      scales: { y: { beginAtZero: false } }
-    }
-  });
-} else if (this.selectedChart === 'differencesFrequency') {
-  const freqMap: Record<string, number> = {};
-  this.deviation.forEach(d => {
-    const key = d.toFixed(2);
-    freqMap[key] = (freqMap[key] || 0) + 1;
-  });
-  const keys = Object.keys(freqMap).sort((a, b) => parseFloat(a) - parseFloat(b));
-  const values = keys.map(k => freqMap[k]);
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            title: { 
+              display: true, 
+              text: this.translate.instant('APPEALS_HISTORY.CHART.DEVIATION'),
+              font: { size: 20 } 
+            },
+            legend: { labels: { font: { size: 14 } } },
+            tooltip: {
+              enabled: true,
+              callbacks: {
+                label: (context) => {
+                  const idx = context.dataIndex ?? 0;
+                  const ri = this.riValues[idx];
+                  const ra = this.raValues[idx];
+                  const diff = this.deviation[idx];
+                  return [
+                    `${this.translate.instant('APPEALS_HISTORY.CHART.TOOLTIP_INITIAL')}: ${ri.toFixed(2)}`,
+                    `${this.translate.instant('APPEALS_HISTORY.CHART.TOOLTIP_CONTESTED')}: ${ra.toFixed(2)}`,
+                    `${this.translate.instant('APPEALS_HISTORY.CHART.TOOLTIP_DIFF')}: ${diff.toFixed(2)}`
+                  ];
+                }
+              }
+            },
+            datalabels: { display: false }
+          },
+          scales: { y: { beginAtZero: false } }
+        }
+      });
+    } else if (this.selectedChart === 'differencesFrequency') {
+      const freqMap: Record<string, number> = {};
+      this.deviation.forEach(d => {
+        const key = d.toFixed(2);
+        freqMap[key] = (freqMap[key] || 0) + 1;
+      });
+      const keys = Object.keys(freqMap).sort((a, b) => parseFloat(a) - parseFloat(b));
+      const values = keys.map(k => freqMap[k]);
 
-  this.chartInstance = new Chart(this.chartCanvas.nativeElement, {
-    type: 'bar',
-    data: { labels: keys, datasets: [{ label: 'Număr studenți', data: values, backgroundColor: 'purple' }] },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        title: { display: true, text: 'Frecvența diferențelor (ra - ri)', font: { size: 20 } },
-        tooltip: {
-          enabled: true,
-          callbacks: {
-            label: (context) => {
-              const diff = context.label;
-              const count = context.raw as number;
-              return [
-                `Diferență: ${diff}`,
-                `Număr studenți: ${count}`
-              ];
-            }
-          }
+      this.chartInstance = new Chart(this.chartCanvas.nativeElement, {
+        type: 'bar',
+        data: { 
+          labels: keys, 
+          datasets: [{
+            label: this.translate.instant('APPEALS_HISTORY.CHART.TOOLTIP_NUM_STUDENTS'),
+            data: values, 
+            backgroundColor: 'purple' 
+          }] 
         },
-        datalabels: { display: false }
-      },
-      scales: { y: { beginAtZero: true } }
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            title: { 
+              display: true, 
+              text: this.translate.instant('APPEALS_HISTORY.CHART.FREQ_DIFF'),
+              font: { size: 20 } 
+            },
+            tooltip: {
+              enabled: true,
+              callbacks: {
+                label: (context) => {
+                  const diff = context.label;
+                  const count = context.raw as number;
+                  return [
+                    `${this.translate.instant('APPEALS_HISTORY.CHART.TOOLTIP_DIFF')}: ${diff}`,
+                    `${this.translate.instant('APPEALS_HISTORY.CHART.TOOLTIP_NUM_STUDENTS')}: ${count}`
+                  ];
+                }
+              }
+            },
+            datalabels: { display: false }
+          },
+          scales: { y: { beginAtZero: true } }
+        }
+      })
     }
-  });
-}
   }
 }

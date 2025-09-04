@@ -4,11 +4,12 @@ import { FilteredHighSchoolEntry } from './licee.model';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   standalone: true,
   selector: 'app-licee',
-  imports: [FormsModule, RouterModule, CommonModule],
+  imports: [FormsModule, RouterModule, CommonModule, TranslateModule],
   templateUrl: './licee.html',
   styleUrls: ['./licee.css']
 })
@@ -21,7 +22,9 @@ export class Licee implements OnInit {
   filteredHighSchools: FilteredHighSchoolEntry[] = [];
   readonly years = [2022, 2023, 2024];
 
-  constructor(private highSchoolService: HighSchoolService) {}
+  constructor(private highSchoolService: HighSchoolService, public translate: TranslateService) {
+    translate.setFallbackLang('ro');
+  }
 
   async ngOnInit(): Promise<void> {
     this.dataLoaded = await this.highSchoolService.initializeData();
